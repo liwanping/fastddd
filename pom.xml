@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>fastddd-common</module>
+        <module>fastddd-api</module>
         <module>fastddd-core</module>
         <module>fastddd-spring</module>
         <module>fastddd-retry</module>
@@ -30,7 +30,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.fastddd</groupId>
-                <artifactId>fastddd-common</artifactId>
+                <artifactId>fastddd-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

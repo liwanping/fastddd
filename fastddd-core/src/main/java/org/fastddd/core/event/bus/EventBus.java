@@ -1,6 +1,6 @@
 package org.fastddd.core.event.bus;
 
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.core.event.listener.EventListener;
 import org.fastddd.core.transaction.TransactionExecutor;
 

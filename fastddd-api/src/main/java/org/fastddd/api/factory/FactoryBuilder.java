@@ -1,6 +1,6 @@
-package org.fastddd.common.factory;
+package org.fastddd.api.factory;
 
-import org.fastddd.common.exception.SystemException;
+import org.fastddd.api.exception.SystemException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

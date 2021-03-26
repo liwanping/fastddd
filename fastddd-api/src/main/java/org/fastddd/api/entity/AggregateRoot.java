@@ -1,6 +1,6 @@
-package org.fastddd.core.entity;
+package org.fastddd.api.entity;
 
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.event.PayloadEvent;
 
 import java.io.Serializable;
 import java.util.Collection;

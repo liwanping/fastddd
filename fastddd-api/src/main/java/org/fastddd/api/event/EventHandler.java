@@ -1,4 +1,4 @@
-package org.fastddd.core.event.annotation;
+package org.fastddd.api.event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

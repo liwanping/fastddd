@@ -1,4 +1,4 @@
-package org.fastddd.core.event;
+package org.fastddd.api.event;
 
 public interface PayloadEvent {
 }

@@ -1,8 +1,8 @@
 package org.fastddd.spring.event;
 
-import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.utils.ReflectionUtils;
 import org.fastddd.core.event.bus.EventBusFactory;
-import org.fastddd.core.event.annotation.EventHandler;
+import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
 import org.springframework.beans.BeansException;

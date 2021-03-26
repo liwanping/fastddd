@@ -1,9 +1,9 @@
 package org.fastddd.core.event.bus;
 
-import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.utils.ReflectionUtils;
 import org.fastddd.core.event.EventInvocation;
-import org.fastddd.core.event.PayloadEvent;
-import org.fastddd.core.event.annotation.EventHandler;
+import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
 import org.fastddd.core.transaction.TransactionExecutor;

@@ -1,4 +1,4 @@
-package org.fastddd.core.entity;
+package org.fastddd.api.entity;
 
 import java.io.Serializable;
 

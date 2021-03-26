@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>org.fastddd</groupId>
-            <artifactId>fastddd-common</artifactId>
+            <artifactId>fastddd-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>

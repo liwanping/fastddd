@@ -1,8 +1,8 @@
 package org.fastddd.core.event.processor;
 
-import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.utils.ReflectionUtils;
 import org.fastddd.core.event.EventInvocation;
-import org.fastddd.core.event.annotation.EventHandler;
+import org.fastddd.api.event.EventHandler;
 
 public class EventHandlerProcessor {
 

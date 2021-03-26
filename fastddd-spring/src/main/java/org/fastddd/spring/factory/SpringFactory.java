@@ -1,11 +1,10 @@
 package org.fastddd.spring.factory;
 
-import org.fastddd.common.exception.SystemException;
-import org.fastddd.common.factory.FactoryBuilder;
-import org.fastddd.core.dao.DaoFactory;
-import org.fastddd.core.dao.DomainObjectDao;
-import org.fastddd.core.entity.DomainObject;
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.exception.SystemException;
+import org.fastddd.api.factory.FactoryBuilder;
+import org.fastddd.api.dao.DaoFactory;
+import org.fastddd.api.dao.DomainObjectDao;
+import org.fastddd.api.entity.DomainObject;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

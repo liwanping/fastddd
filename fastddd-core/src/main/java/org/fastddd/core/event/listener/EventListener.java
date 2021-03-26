@@ -1,7 +1,7 @@
 package org.fastddd.core.event.listener;
 
 import org.fastddd.core.event.EventInvocation;
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.event.PayloadEvent;
 
 import java.util.Collection;
 import java.util.List;

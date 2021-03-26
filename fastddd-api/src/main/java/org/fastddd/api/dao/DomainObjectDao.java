@@ -1,6 +1,6 @@
-package org.fastddd.core.dao;
+package org.fastddd.api.dao;
 
-import org.fastddd.core.entity.DomainObject;
+import org.fastddd.api.entity.DomainObject;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package org.fastddd.core.session;
 
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.event.PayloadEvent;
 
 public interface TransactionalSession {
 

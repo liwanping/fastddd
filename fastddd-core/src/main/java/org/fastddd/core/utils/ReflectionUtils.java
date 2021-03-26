@@ -1,4 +1,4 @@
-package org.fastddd.common.utils;
+package org.fastddd.core.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

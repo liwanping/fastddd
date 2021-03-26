@@ -2,7 +2,7 @@ package org.fastddd.core.session;
 
 import org.fastddd.core.event.bus.EventBusFactory;
 import org.fastddd.core.event.EventInvocation;
-import org.fastddd.core.event.PayloadEvent;
+import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
 
 import java.util.ArrayList;
