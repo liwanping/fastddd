@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
+        <module>fastddd-common</module>
         <module>fastddd-api</module>
         <module>fastddd-core</module>
         <module>fastddd-spring</module>
@@ -28,6 +29,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.fastddd</groupId>
+                <artifactId>fastddd-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.fastddd</groupId>
                 <artifactId>fastddd-api</artifactId>
@@ -88,6 +94,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
             </dependency>
 
             <dependency>

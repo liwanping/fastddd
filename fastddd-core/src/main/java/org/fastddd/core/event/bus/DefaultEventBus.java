@@ -1,20 +1,21 @@
 package org.fastddd.core.event.bus;
 
+import org.fastddd.core.event.processor.EventHandlerProcessor;
+import org.fastddd.core.session.DefaultTransactionalSessionFactory;
 import org.fastddd.core.utils.ReflectionUtils;
-import org.fastddd.core.event.EventInvocation;
+import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
-import org.fastddd.core.transaction.TransactionExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class SimpleEventBus implements EventBus {
+public class DefaultEventBus implements EventBus {
 
-    private static final EventBus INSTANCE = new SimpleEventBus();
+    private static final EventBus INSTANCE = new DefaultEventBus();
 
     private final List<EventListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -38,9 +39,9 @@ public class SimpleEventBus implements EventBus {
     }
 
     @Override
-    public void publish(List<PayloadEvent> payloadEvents, TransactionExecutor transactionExecutor) {
+    public void publish(List<PayloadEvent> payloadEvents) {
 
-        List<EventInvocation> invocations = new ArrayList<>();
+        List<Invocation> invocations = new ArrayList<>();
 
         for (EventListener listener : listeners) {
             invocations.addAll(listener.generateInvocations(payloadEvents));
@@ -48,11 +49,7 @@ public class SimpleEventBus implements EventBus {
 
         sort(invocations);
 
-        if (transactionExecutor != null) {
-            transactionExecutor.executeInTransaction();
-        }
-
-        for (EventInvocation invocation : invocations) {
+        for (Invocation invocation : invocations) {
             handle(invocation);
         }
     }
@@ -62,16 +59,16 @@ public class SimpleEventBus implements EventBus {
         return this.listeners;
     }
 
-    private void handle(EventInvocation invocation) {
+    private void handle(Invocation invocation) {
         EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
         if (eventHandler.fireAfterTransaction()) {
-
+            DefaultTransactionalSessionFactory.get().requireSession().addPostInvoker(invocation);
         } else {
-            //EventHandlerProcessor.proceed(invocation);
+            EventHandlerProcessor.process(invocation);
         }
     }
 
-    private void sort(List<EventInvocation> invocations) {
+    private void sort(List<Invocation> invocations) {
         invocations.sort((i1, i2) -> {
             EventHandler e1 = ReflectionUtils.getAnnotation(i1.getMethod(), EventHandler.class);
             EventHandler e2 = ReflectionUtils.getAnnotation(i2.getMethod(), EventHandler.class);

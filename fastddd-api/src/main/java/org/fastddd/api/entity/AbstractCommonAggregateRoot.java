@@ -3,7 +3,7 @@ package org.fastddd.api.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class AbstractSimpleAggregateRoot<ID extends Serializable> extends AbstractAggregateRoot<ID> {
+public abstract class AbstractCommonAggregateRoot<ID extends Serializable> extends AbstractAggregateRoot<ID> {
 
     private Date createdTime;
 

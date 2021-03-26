@@ -1,25 +1,19 @@
 package org.fastddd.core.session;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.fastddd.api.event.EventRegistry;
 import org.fastddd.core.event.bus.EventBusFactory;
-import org.fastddd.core.event.EventInvocation;
+import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class DefaultTransactionalSession implements TransactionalSession {
 
-    private final List<PayloadEvent> payloadEventList = new ArrayList<>();
-
-    private final Queue<EventInvocation> invocationQueue = new ConcurrentLinkedDeque<>();
-
-    @Override
-    public void registerEvent(PayloadEvent payloadEvent) {
-        payloadEventList.add(payloadEvent);
-    }
+    private final Queue<Invocation> invocationQueue = new ConcurrentLinkedDeque<>();
 
     @Override
     public void commit() {
@@ -43,21 +37,26 @@ public class DefaultTransactionalSession implements TransactionalSession {
                 EventHandlerProcessor.process(invocationQueue.poll());
             }
         } finally {
-            payloadEventList.clear();
             invocationQueue.clear();
+            EventRegistry.remove();
         }
     }
 
+    @Override
+    public void addPostInvoker(Invocation invocation) {
+        invocationQueue.add(invocation);
+    }
+
     protected void doCommit() {
-        if (!payloadEventList.isEmpty()) {
-            EventBusFactory.getEventBus().publish(payloadEventList, payloadEventList::clear);
-            // in case new event registered after execution
+        List<PayloadEvent> payloadEvents = EventRegistry.unregisterAll();
+        if (CollectionUtils.isNotEmpty(payloadEvents)) {
+            EventBusFactory.getEventBus().publish(payloadEvents);
+            // in case new events registered after fired
             doCommit();
         }
     }
 
     protected void doRollback() {
-        payloadEventList.clear();
         invocationQueue.clear();
     }
 }

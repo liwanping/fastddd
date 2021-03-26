@@ -1,7 +1,7 @@
 package org.fastddd.spring.factory;
 
-import org.fastddd.api.exception.SystemException;
-import org.fastddd.api.factory.FactoryBuilder;
+import org.fastddd.common.exception.SystemException;
+import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.api.dao.DaoFactory;
 import org.fastddd.api.dao.DomainObjectDao;
 import org.fastddd.api.entity.DomainObject;

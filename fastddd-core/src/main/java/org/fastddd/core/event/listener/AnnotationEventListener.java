@@ -1,7 +1,7 @@
 package org.fastddd.core.event.listener;
 
-import org.fastddd.api.exception.SystemException;
-import org.fastddd.core.event.EventInvocation;
+import org.fastddd.common.exception.SystemException;
+import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.utils.ClassUtils;
@@ -32,7 +32,7 @@ public class AnnotationEventListener implements EventListener {
     }
 
     @Override
-    public List<EventInvocation> generateInvocations(Collection<PayloadEvent> events) {
+    public List<Invocation> generateInvocations(Collection<PayloadEvent> events) {
 
         Map<Class<? extends PayloadEvent>, List<PayloadEvent>> eventMap = new HashMap<>();
         for (PayloadEvent event : events) {
@@ -42,7 +42,7 @@ public class AnnotationEventListener implements EventListener {
             eventMap.get(events.getClass()).add(event);
         }
 
-        List<EventInvocation> invocations = new ArrayList<>();
+        List<Invocation> invocations = new ArrayList<>();
 
         for (Method method : methods) {
             Type[] types = method.getGenericParameterTypes();
@@ -58,10 +58,10 @@ public class AnnotationEventListener implements EventListener {
             for (Map.Entry<Class<? extends PayloadEvent>, List<PayloadEvent>> entry : eventMap.entrySet()) {
                 if (isTypeEquals(eventType, entry.getKey())) {
                     for (PayloadEvent payloadEvent : entry.getValue()) {
-                        invocations.add(new EventInvocation(method, this.target, payloadEvent));
+                        invocations.add(new Invocation(method, this.target, payloadEvent));
                     }
                 } else if (isCollectionOfType(eventType, entry.getKey())) {
-                    invocations.add(new EventInvocation(method, this.target, entry.getValue()));
+                    invocations.add(new Invocation(method, this.target, entry.getValue()));
                 }
             }
         }

@@ -1,4 +1,4 @@
-package org.fastddd.api.exception;
+package org.fastddd.common.exception;
 
 public class SystemException extends RuntimeException {
 

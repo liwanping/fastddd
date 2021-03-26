@@ -9,12 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>fastddd-api</artifactId>
+    <artifactId>fastddd-common</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.fastddd</groupId>
-            <artifactId>fastddd-common</artifactId>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
         </dependency>
     </dependencies>
 

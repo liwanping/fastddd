@@ -1,14 +1,14 @@
 package org.fastddd.core.session;
 
-import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.common.invocation.Invocation;
 
 public interface TransactionalSession {
-
-    void registerEvent(PayloadEvent payloadEvent);
 
     void commit();
 
     void rollback();
 
     void cleanupAfterCompletion();
+
+    void addPostInvoker(Invocation invocation);
 }

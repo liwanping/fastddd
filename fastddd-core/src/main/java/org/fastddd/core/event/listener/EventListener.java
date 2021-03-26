@@ -1,6 +1,6 @@
 package org.fastddd.core.event.listener;
 
-import org.fastddd.core.event.EventInvocation;
+import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 
 import java.util.Collection;
@@ -10,5 +10,5 @@ public interface EventListener {
 
     Class<?> getTargetType();
 
-    List<EventInvocation> generateInvocations(Collection<PayloadEvent> events);
+    List<Invocation> generateInvocations(Collection<PayloadEvent> events);
 }
