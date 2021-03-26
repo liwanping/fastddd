@@ -10,4 +10,6 @@ public interface BatchDomainObjectDao<T extends DomainObject<ID>, ID extends Ser
     List<T> findByIds(List<ID> ids);
 
     int insertAll(List<T> entities);
+
+    int updateAll(List<T> entities);
 }
