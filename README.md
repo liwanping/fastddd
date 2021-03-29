@@ -1,2 +1,2 @@
-# fastddd
-基于快速领域驱动设计构建Java应用程序
+# FastDDD
+基于领域驱动设计快速构建Java应用程序
