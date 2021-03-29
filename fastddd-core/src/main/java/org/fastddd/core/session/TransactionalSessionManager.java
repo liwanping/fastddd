@@ -6,13 +6,7 @@ import java.util.Objects;
 
 public class TransactionalSessionManager implements SessionManager {
 
-    private static final SessionManager INSTANCE = new TransactionalSessionManager();
-
     private static final ThreadLocal<Deque<SessionEntry>> CURRENT = new ThreadLocal<>();
-
-    public static SessionManager get() {
-        return INSTANCE;
-    }
 
     @Override
     public boolean registerSession(boolean requireNew) {

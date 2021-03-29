@@ -14,4 +14,6 @@ public @interface EventHandler {
     boolean fireAfterTransaction() default false;
 
     int sequence() default 0;
+
+    AsyncConfig asyncConfig() default @AsyncConfig();
 }

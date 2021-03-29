@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface EventListener {
 
-    Class<?> getTargetType();
-
-    List<Invocation> generateInvocations(Collection<PayloadEvent> events);
+    List<Invocation> onEvent(Collection<PayloadEvent> events);
 }

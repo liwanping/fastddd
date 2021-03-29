@@ -2,15 +2,14 @@ package org.fastddd.core.session;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fastddd.api.event.EventRegistry;
-import org.fastddd.core.event.bus.EventBusManager;
-import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.common.invocation.Invocation;
+import org.fastddd.core.event.bus.EventBus;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
+import org.fastddd.core.injector.InjectorFactory;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class TransactionalSession implements Session {
@@ -63,7 +62,7 @@ public class TransactionalSession implements Session {
     protected void doCommit() {
         List<PayloadEvent> payloadEvents = EventRegistry.unregisterAll();
         if (CollectionUtils.isNotEmpty(payloadEvents)) {
-            EventBusManager.getEventBus().publish(payloadEvents);
+            InjectorFactory.getInstance(EventBus.class).publish(payloadEvents);
             // in case new events registered after fired
             doCommit();
         }

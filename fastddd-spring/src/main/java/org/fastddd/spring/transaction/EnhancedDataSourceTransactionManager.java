@@ -1,6 +1,6 @@
 package org.fastddd.spring.transaction;
 
-import org.fastddd.core.session.TransactionalSessionManager;
+import org.fastddd.core.injector.InjectorFactory;
 import org.fastddd.core.session.SessionManager;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -9,7 +9,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 
 public class EnhancedDataSourceTransactionManager extends DataSourceTransactionManager {
 
-    private SessionManager sessionFactory = TransactionalSessionManager.get();
+    private SessionManager sessionFactory = InjectorFactory.getInstance(SessionManager.class);
 
     @Override
     protected void doBegin(Object transaction, TransactionDefinition definition) {

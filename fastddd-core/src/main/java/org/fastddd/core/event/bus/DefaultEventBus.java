@@ -1,6 +1,9 @@
 package org.fastddd.core.event.bus;
 
+import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
+import org.fastddd.core.injector.InjectorFactory;
+import org.fastddd.core.session.SessionManager;
 import org.fastddd.core.session.TransactionalSessionManager;
 import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.common.invocation.Invocation;
@@ -15,23 +18,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DefaultEventBus implements EventBus {
 
-    private static final EventBus INSTANCE = new DefaultEventBus();
-
     private final List<EventListener> listeners = new CopyOnWriteArrayList<>();
-
-    protected static EventBus get() {
-        return INSTANCE;
-    }
 
     @Override
     public void subscribe(EventListener eventListener) {
 
-        if (eventListener instanceof AnnotationEventListener) {
-            for (EventListener listener : listeners) {
-                if (listener.getTargetType().equals(eventListener.getTargetType())) {
-                    // duplicated entry
-                    return;
-                }
+        for (EventListener listener : listeners) {
+            if (listener.equals(eventListener)) {
+                // duplicated entry
+                return;
             }
         }
 
@@ -44,28 +39,30 @@ public class DefaultEventBus implements EventBus {
         List<Invocation> invocations = new ArrayList<>();
 
         for (EventListener listener : listeners) {
-            invocations.addAll(listener.generateInvocations(payloadEvents));
+            invocations.addAll(listener.onEvent(payloadEvents));
         }
 
         sort(invocations);
 
+        // before invoke
         for (Invocation invocation : invocations) {
-            handle(invocation);
+            InvocationHelper.beforeInvoke(invocation);
+        }
+
+        // do invoke as config
+        for (Invocation invocation : invocations) {
+            EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
+            if (eventHandler.fireAfterTransaction()) {
+                InjectorFactory.getInstance(SessionManager.class).requireSession().addPostInvoker(invocation);
+            } else {
+                EventHandlerProcessor.process(invocation);
+            }
         }
     }
 
     @Override
     public List<EventListener> getAllEventListeners() {
         return this.listeners;
-    }
-
-    private void handle(Invocation invocation) {
-        EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
-        if (eventHandler.fireAfterTransaction()) {
-            TransactionalSessionManager.get().requireSession().addPostInvoker(invocation);
-        } else {
-            EventHandlerProcessor.process(invocation);
-        }
     }
 
     private void sort(List<Invocation> invocations) {

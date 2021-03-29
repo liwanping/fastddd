@@ -4,6 +4,7 @@ import org.fastddd.common.exception.SystemException;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
+import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.common.utils.ClassUtils;
 
 import java.lang.reflect.Method;
@@ -27,12 +28,7 @@ public class AnnotationEventListener implements EventListener {
     }
 
     @Override
-    public Class<?> getTargetType() {
-        return target.getClass();
-    }
-
-    @Override
-    public List<Invocation> generateInvocations(Collection<PayloadEvent> events) {
+    public List<Invocation> onEvent(Collection<PayloadEvent> events) {
 
         Map<Class<? extends PayloadEvent>, List<PayloadEvent>> eventMap = new HashMap<>();
         for (PayloadEvent event : events) {
