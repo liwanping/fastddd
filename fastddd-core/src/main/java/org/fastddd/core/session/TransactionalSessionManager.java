@@ -20,16 +20,16 @@ public class TransactionalSessionManager implements SessionManager {
             if (CURRENT.get() == null) {
                 CURRENT.set(new ArrayDeque<>());
             }
-            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
+            CURRENT.get().push(new SessionEntry(TransactionalSession.create()));
             return true;
         }
 
         if (CURRENT.get() == null) {
             CURRENT.set(new ArrayDeque<>());
-            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
+            CURRENT.get().push(new SessionEntry(TransactionalSession.create()));
             return true;
         } else if (CURRENT.get().peek() == null) {
-            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
+            CURRENT.get().push(new SessionEntry(TransactionalSession.create()));
             return true;
         }
         return false;
@@ -46,6 +46,7 @@ public class TransactionalSessionManager implements SessionManager {
     }
 
     private static class SessionEntry {
+
         private final Session session;
 
         public SessionEntry(Session session) {

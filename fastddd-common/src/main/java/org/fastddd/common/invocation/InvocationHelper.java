@@ -3,12 +3,14 @@ package org.fastddd.common.invocation;
 import org.fastddd.common.utils.ReflectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.Set;
 
-public class InvocationHelper {
+public final class InvocationHelper {
 
-    private static List<InvocationHook> invocationHooks = new ArrayList<>();
+    private static Set<InvocationHook> invocationHooks = new HashSet<>();
 
     static {
         ServiceLoader<InvocationHook> invocationHookServiceLoader = ServiceLoader.load(InvocationHook.class);

@@ -7,18 +7,29 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class TransactionalSession implements Session {
 
     private final Queue<Invocation> invocationQueue = new ConcurrentLinkedDeque<>();
 
+    private TransactionalSession() {}
+
+    public static TransactionalSession create() {
+        TransactionalSession session = new TransactionalSession();
+        SessionHelper.onBegin(session);
+        return session;
+    }
+
     @Override
     public void commit() {
         try {
             doCommit();
+            SessionHelper.onCommit(this);
         } catch (Throwable t) {
             doRollback();
             throw new RuntimeException(t);
@@ -28,6 +39,7 @@ public class TransactionalSession implements Session {
     @Override
     public void rollback() {
         doRollback();
+        SessionHelper.onRollback(this);
     }
 
     @Override
@@ -37,6 +49,7 @@ public class TransactionalSession implements Session {
                 EventHandlerProcessor.process(invocationQueue.poll());
             }
         } finally {
+            SessionHelper.onComplete(this);
             invocationQueue.clear();
             EventRegistry.remove();
         }
