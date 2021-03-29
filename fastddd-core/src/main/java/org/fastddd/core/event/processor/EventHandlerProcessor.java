@@ -1,6 +1,7 @@
 package org.fastddd.core.event.processor;
 
-import org.fastddd.core.utils.ReflectionUtils;
+import org.fastddd.common.invocation.InvocationHelper;
+import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.EventHandler;
 
@@ -11,7 +12,7 @@ public class EventHandlerProcessor {
         if (eventHandler.asynchronous()) {
 
         } else {
-
+            InvocationHelper.doInvoke(invocation);
         }
     }
 }

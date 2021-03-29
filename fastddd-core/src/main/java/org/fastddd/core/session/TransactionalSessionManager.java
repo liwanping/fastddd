@@ -1,19 +1,16 @@
 package org.fastddd.core.session;
 
-import org.fastddd.core.transaction.TransactionExecutor;
-
 import java.util.ArrayDeque;
-import java.util.Currency;
 import java.util.Deque;
 import java.util.Objects;
 
-public class DefaultTransactionalSessionFactory implements TransactionalSessionFactory {
+public class TransactionalSessionManager implements SessionManager {
 
-    private static final TransactionalSessionFactory INSTANCE = new DefaultTransactionalSessionFactory();
+    private static final SessionManager INSTANCE = new TransactionalSessionManager();
 
     private static final ThreadLocal<Deque<SessionEntry>> CURRENT = new ThreadLocal<>();
 
-    public static TransactionalSessionFactory get() {
+    public static SessionManager get() {
         return INSTANCE;
     }
 
@@ -23,23 +20,23 @@ public class DefaultTransactionalSessionFactory implements TransactionalSessionF
             if (CURRENT.get() == null) {
                 CURRENT.set(new ArrayDeque<>());
             }
-            CURRENT.get().push(new SessionEntry(new DefaultTransactionalSession()));
+            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
             return true;
         }
 
         if (CURRENT.get() == null) {
             CURRENT.set(new ArrayDeque<>());
-            CURRENT.get().push(new SessionEntry(new DefaultTransactionalSession()));
+            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
             return true;
         } else if (CURRENT.get().peek() == null) {
-            CURRENT.get().push(new SessionEntry(new DefaultTransactionalSession()));
+            CURRENT.get().push(new SessionEntry(new TransactionalSession()));
             return true;
         }
         return false;
     }
 
     @Override
-    public TransactionalSession requireSession() {
+    public Session requireSession() {
         return Objects.requireNonNull(CURRENT.get().peek()).getSession();
     }
 
@@ -49,14 +46,14 @@ public class DefaultTransactionalSessionFactory implements TransactionalSessionF
     }
 
     private static class SessionEntry {
-        private final TransactionalSession transactionalSession;
+        private final Session session;
 
-        public SessionEntry(TransactionalSession transactionalSession) {
-            this.transactionalSession = transactionalSession;
+        public SessionEntry(Session session) {
+            this.session = session;
         }
 
-        TransactionalSession getSession() {
-            return transactionalSession;
+        Session getSession() {
+            return session;
         }
     }
 }

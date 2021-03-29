@@ -1,6 +1,9 @@
-package org.fastddd.core.utils;
+package org.fastddd.common.utils;
+
+import org.fastddd.common.exception.ReflectionRuntimeException;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectionUtils {
@@ -23,6 +26,28 @@ public class ReflectionUtils {
             currentClass = currentClass.getSuperclass();
         }
         return annotation;
+    }
+
+    public static Object invokeMethod(Method method, Object target, Object[] args) {
+        try {
+            return method.invoke(target, args);
+        } catch (Exception ex) {
+            handleReflectionException(ex);
+        }
+        throw new IllegalStateException("Should never arrive at this point!");
+    }
+
+    private static void handleReflectionException(Exception ex) {
+        if (ex instanceof NoSuchMethodException) {
+            throw new IllegalStateException("Method not found: " + ex.getMessage());
+        }
+        if (ex instanceof IllegalAccessException) {
+            throw new IllegalStateException("Could not access method: " + ex.getMessage());
+        }
+        if (ex instanceof InvocationTargetException) {
+            throw new ReflectionRuntimeException("Invoke method exception thrown", ex);
+        }
+        throw new ReflectionRuntimeException("Unexpected exception thrown", ex);
     }
 
     public static void doWithMethods(Class<?> targetClass, MethodCallback methodCallback) {

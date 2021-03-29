@@ -1,14 +1,62 @@
 package org.fastddd.core.session;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.fastddd.api.event.EventRegistry;
+import org.fastddd.core.event.bus.EventBusManager;
 import org.fastddd.common.invocation.Invocation;
+import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.core.event.processor.EventHandlerProcessor;
 
-public interface TransactionalSession {
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
-    void commit();
+public class TransactionalSession implements Session {
 
-    void rollback();
+    private final Queue<Invocation> invocationQueue = new ConcurrentLinkedDeque<>();
 
-    void cleanupAfterCompletion();
+    @Override
+    public void commit() {
+        try {
+            doCommit();
+        } catch (Throwable t) {
+            doRollback();
+            throw new RuntimeException(t);
+        }
+    }
 
-    void addPostInvoker(Invocation invocation);
+    @Override
+    public void rollback() {
+        doRollback();
+    }
+
+    @Override
+    public void cleanupAfterCompletion() {
+        try {
+            while (!invocationQueue.isEmpty()) {
+                EventHandlerProcessor.process(invocationQueue.poll());
+            }
+        } finally {
+            invocationQueue.clear();
+            EventRegistry.remove();
+        }
+    }
+
+    @Override
+    public void addPostInvoker(Invocation invocation) {
+        invocationQueue.add(invocation);
+    }
+
+    protected void doCommit() {
+        List<PayloadEvent> payloadEvents = EventRegistry.unregisterAll();
+        if (CollectionUtils.isNotEmpty(payloadEvents)) {
+            EventBusManager.getEventBus().publish(payloadEvents);
+            // in case new events registered after fired
+            doCommit();
+        }
+    }
+
+    protected void doRollback() {
+        invocationQueue.clear();
+    }
 }

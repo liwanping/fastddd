@@ -1,7 +1,7 @@
 package org.fastddd.spring.event;
 
-import org.fastddd.core.utils.ReflectionUtils;
-import org.fastddd.core.event.bus.EventBusFactory;
+import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.event.bus.EventBusManager;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
@@ -23,7 +23,7 @@ public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcesso
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (isCandidateBean(bean, beanName)) {
             EventListener eventListener = new AnnotationEventListener(bean);
-            EventBusFactory.getEventBus().subscribe(eventListener);
+            EventBusManager.getEventBus().subscribe(eventListener);
         }
         return bean;
     }

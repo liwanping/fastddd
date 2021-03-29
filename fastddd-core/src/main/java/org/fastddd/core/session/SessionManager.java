@@ -1,10 +1,10 @@
 package org.fastddd.core.session;
 
-public interface TransactionalSessionFactory {
+public interface SessionManager {
 
     boolean registerSession(boolean requireNew);
 
-    TransactionalSession requireSession();
+    Session requireSession();
 
     void closeSession();
 }

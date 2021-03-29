@@ -1,8 +1,8 @@
 package org.fastddd.core.event.bus;
 
 import org.fastddd.core.event.processor.EventHandlerProcessor;
-import org.fastddd.core.session.DefaultTransactionalSessionFactory;
-import org.fastddd.core.utils.ReflectionUtils;
+import org.fastddd.core.session.TransactionalSessionManager;
+import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
@@ -19,7 +19,7 @@ public class DefaultEventBus implements EventBus {
 
     private final List<EventListener> listeners = new CopyOnWriteArrayList<>();
 
-    public static EventBus get() {
+    protected static EventBus get() {
         return INSTANCE;
     }
 
@@ -62,7 +62,7 @@ public class DefaultEventBus implements EventBus {
     private void handle(Invocation invocation) {
         EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
         if (eventHandler.fireAfterTransaction()) {
-            DefaultTransactionalSessionFactory.get().requireSession().addPostInvoker(invocation);
+            TransactionalSessionManager.get().requireSession().addPostInvoker(invocation);
         } else {
             EventHandlerProcessor.process(invocation);
         }

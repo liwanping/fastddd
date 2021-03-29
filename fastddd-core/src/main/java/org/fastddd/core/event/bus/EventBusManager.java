@@ -1,6 +1,6 @@
 package org.fastddd.core.event.bus;
 
-public class EventBusFactory {
+public class EventBusManager {
 
     private static EventBus eventBus = DefaultEventBus.get();
 
@@ -9,6 +9,6 @@ public class EventBusFactory {
     }
 
     public static void setEventBus(EventBus eventBus) {
-        EventBusFactory.eventBus = eventBus;
+        EventBusManager.eventBus = eventBus;
     }
 }

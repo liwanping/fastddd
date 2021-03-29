@@ -4,7 +4,7 @@ import org.fastddd.common.exception.SystemException;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
-import org.fastddd.core.utils.ClassUtils;
+import org.fastddd.common.utils.ClassUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
