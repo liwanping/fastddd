@@ -20,6 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncDisruptor implements AsyncInvoker {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncDisruptor.class);

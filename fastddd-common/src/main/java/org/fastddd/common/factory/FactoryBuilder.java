@@ -5,6 +5,11 @@ import org.fastddd.common.exception.SystemException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Hold kinds of factory instances
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class FactoryBuilder {
 
     private static final ConcurrentHashMap<Class, Object> FACTORY_MAP = new ConcurrentHashMap<>();

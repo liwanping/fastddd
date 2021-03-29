@@ -1,7 +1,10 @@
 package org.fastddd.common.invocation;
 
-import org.fastddd.common.invocation.Invocation;
-
+/**
+ * The hook interface that will intercept the invocation before/after invoking.
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public interface InvocationHook {
 
     void beforeInvoke(Invocation invocation);

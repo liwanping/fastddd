@@ -6,7 +6,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 
-
+/**
+ * Enhanced datasource transaction manager
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class EnhancedDataSourceTransactionManager extends DataSourceTransactionManager {
 
     private SessionManager sessionFactory = InjectorFactory.getInstance(SessionManager.class);

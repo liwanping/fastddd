@@ -6,6 +6,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class ReflectionUtils {
 
     public static <T extends Annotation> T getAnnotation(Method method, Class<T> annotaionType) {

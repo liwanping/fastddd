@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The repository that will implement the basic operations with the defined dao instance
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class DaoAwareRepository<T extends AggregateRoot<ID>, ID extends Serializable> extends AbstractRepository<T, ID> {
 
     public DaoAwareRepository(Class<T> aggregateType) {

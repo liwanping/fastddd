@@ -4,6 +4,10 @@ import com.lmax.disruptor.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncEventExceptionHandler implements ExceptionHandler<AsyncEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncEventExceptionHandler.class);

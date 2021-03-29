@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Default event bus implementation
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class DefaultEventBus implements EventBus {
 
     private final List<EventListener> listeners = new CopyOnWriteArrayList<>();

@@ -2,6 +2,10 @@ package org.fastddd.core.event.processor.async;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncThread extends Thread {
 
     private static final String PREFIX = "async-event-";

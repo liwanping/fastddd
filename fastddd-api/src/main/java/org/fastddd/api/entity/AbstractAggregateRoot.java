@@ -1,28 +1,12 @@
 package org.fastddd.api.entity;
 
-import org.fastddd.api.event.PayloadEvent;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
+/**
+ * The abstract aggregate root
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public abstract class AbstractAggregateRoot<ID extends Serializable> extends AbstractDomainObject<ID> implements AggregateRoot<ID> {
 
-    private final List<PayloadEvent> payloadEvents = new ArrayList<>();
-
-    @Override
-    public void registerEvent(PayloadEvent payloadEvent) {
-        payloadEvents.add(payloadEvent);
-    }
-
-    @Override
-    public Collection<? extends PayloadEvent> getUncommittedEvents() {
-        return payloadEvents;
-    }
-
-    @Override
-    public void commitEvents() {
-        payloadEvents.clear();
-    }
 }

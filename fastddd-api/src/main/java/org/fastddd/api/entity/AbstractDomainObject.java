@@ -2,6 +2,11 @@ package org.fastddd.api.entity;
 
 import java.io.Serializable;
 
+/**
+ * The abstract domain object
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public abstract class AbstractDomainObject<ID extends Serializable> implements DomainObject<ID> {
 
     private boolean isNew;

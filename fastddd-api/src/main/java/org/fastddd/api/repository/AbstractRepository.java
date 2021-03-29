@@ -14,6 +14,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public abstract class AbstractRepository<T extends AggregateRoot<ID>, ID extends Serializable> implements Repository<T, ID> {
 
     protected final Class<T> aggregateType;

@@ -1,5 +1,9 @@
 package org.fastddd.core.event.processor.async;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncConfig {
 
     private String name;

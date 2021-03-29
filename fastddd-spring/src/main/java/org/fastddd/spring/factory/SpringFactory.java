@@ -16,6 +16,11 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Spring factory
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 @Component
 public class SpringFactory implements DaoFactory, ApplicationContextAware {
 

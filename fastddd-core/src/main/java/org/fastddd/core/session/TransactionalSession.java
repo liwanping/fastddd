@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class TransactionalSession implements Session {
 
     private final Queue<Invocation> invocationQueue = new ConcurrentLinkedDeque<>();

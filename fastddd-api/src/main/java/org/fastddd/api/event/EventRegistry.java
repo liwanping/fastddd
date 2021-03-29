@@ -3,6 +3,11 @@ package org.fastddd.api.event;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manage the payload event to register or unregister
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public final class EventRegistry {
 
     private static final ThreadLocal<List<PayloadEvent>> TL = ThreadLocal.withInitial(ArrayList::new);

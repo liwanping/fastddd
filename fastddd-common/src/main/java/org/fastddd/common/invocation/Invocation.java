@@ -3,6 +3,11 @@ package org.fastddd.common.invocation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+/**
+ * Invocation class to hold the required info for invoking
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public final class Invocation {
 
     private final Method method;

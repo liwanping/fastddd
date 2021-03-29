@@ -7,6 +7,11 @@ import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.injector.InjectorFactory;
 
+/**
+ * Process invocation that the method is annotated with @EventHandler
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class EventHandlerProcessor {
 
     public static void process(Invocation invocation) {

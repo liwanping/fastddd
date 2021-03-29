@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.ServiceLoader;
 import java.util.Set;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public final class SessionHelper {
 
     private static Set<SessionLifecycleListener> sessionLifecycleListeners = new HashSet<>();

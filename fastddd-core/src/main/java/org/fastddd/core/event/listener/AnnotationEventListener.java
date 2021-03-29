@@ -22,6 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * AnnotationEventListener that monitor the methods with @EventHandler annotated
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AnnotationEventListener implements EventListener {
 
     private final Object target;

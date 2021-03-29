@@ -4,6 +4,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class TransactionalSessionManager implements SessionManager {
 
     private static final ThreadLocal<Deque<SessionEntry>> CURRENT = new ThreadLocal<>();

@@ -5,6 +5,10 @@ import org.fastddd.common.utils.ReflectionUtils;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncUtils {
 
     public static AsyncConfig buildAsyncConfig(Object target, Method method) {

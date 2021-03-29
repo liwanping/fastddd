@@ -1,5 +1,9 @@
 package org.fastddd.common.exception;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class OptimisticLockException extends RuntimeException {
 
     public OptimisticLockException(String message) {

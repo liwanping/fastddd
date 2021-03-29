@@ -8,6 +8,11 @@ import org.fastddd.core.event.processor.async.disruptor.AsyncDisruptor;
 import org.fastddd.core.session.SessionManager;
 import org.fastddd.core.session.TransactionalSessionManager;
 
+/**
+ * The module to bind the required classes and instances
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class CoreModule extends AbstractModule {
 
     @Override

@@ -3,6 +3,10 @@ package org.fastddd.core.event.processor.async;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncThreadFactory implements ThreadFactory {
 
     private static final AtomicLong FACTORY_NUMBER = new AtomicLong(1L);

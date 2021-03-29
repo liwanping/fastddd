@@ -5,6 +5,10 @@ import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceReportingEventHandler;
 import org.fastddd.common.invocation.InvocationHelper;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public class AsyncEventHandler implements SequenceReportingEventHandler<AsyncEvent>, LifecycleAware {
 
     private static final int NOTIFY_PROGRESS_THRESHOLD = 50;

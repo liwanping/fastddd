@@ -5,6 +5,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public final class ClassUtils {
 
     private static final String CGLIB_SUB_CLASS_IDENTIFIER = "CGLIB";

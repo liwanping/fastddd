@@ -5,15 +5,22 @@ import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.core.event.bus.EventBus;
 import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
+import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.injector.InjectorFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Bean processor to scan and handle @EventHandler
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 @Component
-public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcessor {
+public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcessor, DisposableBean {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -37,5 +44,10 @@ public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcesso
             }
         });
         return result.get();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        InjectorFactory.getInstance(AsyncInvoker.class).shutdown();
     }
 }

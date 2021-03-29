@@ -4,6 +4,11 @@ import org.fastddd.api.entity.DomainObject;
 
 import java.io.Serializable;
 
+/**
+ * Basic interface of dao for domain object
+ * @author: frank.li
+ * @date: 2021/3/29
+ */
 public interface DomainObjectDao<T extends DomainObject<ID>, ID extends Serializable> {
 
     T findById(ID id);
