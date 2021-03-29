@@ -4,6 +4,8 @@ import org.fastddd.common.invocation.Invocation;
 
 public interface Session {
 
+    void begin();
+
     void commit();
 
     void rollback();

@@ -19,9 +19,12 @@ public class TransactionalSession implements Session {
     private TransactionalSession() {}
 
     public static TransactionalSession create() {
-        TransactionalSession session = new TransactionalSession();
-        SessionHelper.onBegin(session);
-        return session;
+        return new TransactionalSession();
+    }
+
+    @Override
+    public void begin() {
+        SessionHelper.onBegin(this);
     }
 
     @Override

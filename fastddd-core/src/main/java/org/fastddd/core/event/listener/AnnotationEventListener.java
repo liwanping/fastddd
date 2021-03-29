@@ -6,6 +6,11 @@ import org.fastddd.api.event.PayloadEvent;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.common.utils.ClassUtils;
+import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.event.processor.async.AsyncConfig;
+import org.fastddd.core.event.processor.async.AsyncInvoker;
+import org.fastddd.core.event.processor.async.AsyncUtils;
+import org.fastddd.core.injector.InjectorFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -25,6 +30,7 @@ public class AnnotationEventListener implements EventListener {
     public AnnotationEventListener(Object target) {
         this.target = target;
         this.methods = ClassUtils.getAnnotatedMethods(target.getClass(), EventHandler.class);
+        init();
     }
 
     @Override
@@ -77,6 +83,17 @@ public class AnnotationEventListener implements EventListener {
     @Override
     public int hashCode() {
         return target != null ? target.hashCode() : 0;
+    }
+
+    private void init() {
+        // prepare for async invoke
+        for (Method method : methods) {
+            EventHandler eventHandler = ReflectionUtils.getAnnotation(method, EventHandler.class);
+            if (eventHandler.asynchronous()) {
+                AsyncConfig asyncConfig = AsyncUtils.buildAsyncConfig(target, method);
+                InjectorFactory.getInstance(AsyncInvoker.class).start(asyncConfig);
+            }
+        }
     }
 
     private boolean isTypeEquals(Type type, Class<?> targetClass) {

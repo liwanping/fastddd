@@ -1,18 +1,17 @@
 package org.fastddd.core.event.processor.async.disruptor;
 
-import com.lmax.disruptor.ExceptionHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.TimeoutBlockingWaitStrategy;
 import com.lmax.disruptor.TimeoutException;
 import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-import org.fastddd.api.event.EventHandler;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHelper;
-import org.fastddd.common.utils.ReflectionUtils;
+import org.fastddd.core.event.processor.async.AsyncConfig;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.event.processor.async.AsyncThreadFactory;
+import org.fastddd.core.event.processor.async.AsyncUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +31,15 @@ public class AsyncDisruptor implements AsyncInvoker {
     @Override
     public void invoke(Invocation invocation) {
 
+        AsyncConfig asyncConfig = AsyncUtils.buildAsyncConfig(invocation.getTarget(), invocation.getMethod());
+
         // ensure disruptor started
-        start(invocation);
+        start(asyncConfig);
 
         AsyncEventTranslator eventTranslator = eventTranslatorThreadLocal.get();
         eventTranslator.reset(invocation);
 
-        Disruptor<AsyncEvent> disruptor = disruptorMap.get(getAsyncInvokerKey(eventTranslator.getInvocation()));
+        Disruptor<AsyncEvent> disruptor = disruptorMap.get(asyncConfig.getName());
 
         if (!disruptor.getRingBuffer().tryPublishEvent(eventTranslator)) {
             LOGGER.warn("Disruptor ring buffer is full, event handler will be executed in sync mode for {}.{}",
@@ -49,30 +50,27 @@ public class AsyncDisruptor implements AsyncInvoker {
     }
 
     @Override
-    public void start(Invocation invocation) {
+    public void start(AsyncConfig asyncConfig) {
 
-        String asyncInvokerKey = getAsyncInvokerKey(invocation);
-        if (disruptorMap.containsKey(asyncInvokerKey)) {
-           return;
+        String disruptorName = asyncConfig.getName();
+        if (disruptorMap.containsKey(disruptorName)) {
+            return;
         }
 
         synchronized (AsyncDisruptor.class) {
-            if (disruptorMap.containsKey(asyncInvokerKey)) {
+            if (disruptorMap.containsKey(disruptorName)) {
                 return;
             }
 
-            LOGGER.info("starting disruptor: {}", asyncInvokerKey);
+            LOGGER.info("starting disruptor: {}", asyncConfig);
 
-            EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
-            int ringBufferSize = eventHandler.asyncConfig().disruptorRingBufferSize();
-
-            String threadPrefix = invocation.getMethod().getDeclaringClass().getSimpleName() + "-disruptor";
+            String threadPrefix = asyncConfig.getName() + "-disruptor";
             ThreadFactory threadFactory = new AsyncThreadFactory(threadPrefix, true, Thread.NORM_PRIORITY);
 
             WaitStrategy waitStrategy = new TimeoutBlockingWaitStrategy(10L, TimeUnit.MILLISECONDS);
 
             Disruptor<AsyncEvent> disruptor = new Disruptor<>(new AsyncEventFactory(),
-                    ringBufferSize, threadFactory, ProducerType.MULTI, waitStrategy);
+                    asyncConfig.getDisruptorRingBufferSize(), threadFactory, ProducerType.MULTI, waitStrategy);
 
             AsyncEventHandler[] eventHandlers = {new AsyncEventHandler()};
             disruptor.handleEventsWith(eventHandlers);
@@ -81,13 +79,13 @@ public class AsyncDisruptor implements AsyncInvoker {
 
             disruptor.start();
 
-            LOGGER.info("started disruptor: {}", asyncInvokerKey);
+            LOGGER.info("started disruptor: {}", disruptorName);
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                stop(asyncInvokerKey, disruptor);
+                stop(disruptorName, disruptor);
             }));
 
-            disruptorMap.put(asyncInvokerKey, disruptor);
+            disruptorMap.put(disruptorName, disruptor);
         }
     }
 
@@ -102,10 +100,6 @@ public class AsyncDisruptor implements AsyncInvoker {
         }
 
         tmpDisruptorMap.forEach(this::stop);
-    }
-
-    private String getAsyncInvokerKey(Invocation invocation) {
-        return invocation.getTarget().getClass().getCanonicalName();
     }
 
     private void stop(String name, Disruptor<AsyncEvent> disruptor) {

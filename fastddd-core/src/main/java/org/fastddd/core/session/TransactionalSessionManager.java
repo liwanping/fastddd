@@ -45,6 +45,7 @@ public class TransactionalSessionManager implements SessionManager {
 
         public SessionEntry(Session session) {
             this.session = session;
+            this.session.begin();
         }
 
         Session getSession() {
