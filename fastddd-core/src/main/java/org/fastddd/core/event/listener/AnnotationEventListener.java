@@ -2,9 +2,8 @@ package org.fastddd.core.event.listener;
 
 import org.fastddd.common.exception.SystemException;
 import org.fastddd.common.invocation.Invocation;
-import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.api.event.DomainEvent;
 import org.fastddd.api.event.EventHandler;
-import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.common.utils.ClassUtils;
 import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.core.event.processor.async.AsyncConfig;
@@ -39,10 +38,10 @@ public class AnnotationEventListener implements EventListener {
     }
 
     @Override
-    public List<Invocation> onEvent(Collection<PayloadEvent> events) {
+    public List<Invocation> onEvent(Collection<DomainEvent> events) {
 
-        Map<Class<? extends PayloadEvent>, List<PayloadEvent>> eventMap = new HashMap<>();
-        for (PayloadEvent event : events) {
+        Map<Class<? extends DomainEvent>, List<DomainEvent>> eventMap = new HashMap<>();
+        for (DomainEvent event : events) {
             if (!eventMap.containsKey(event.getClass())) {
                 eventMap.put(event.getClass(), new ArrayList<>());
             }
@@ -62,10 +61,10 @@ public class AnnotationEventListener implements EventListener {
             }
 
             Type eventType = types[0];
-            for (Map.Entry<Class<? extends PayloadEvent>, List<PayloadEvent>> entry : eventMap.entrySet()) {
+            for (Map.Entry<Class<? extends DomainEvent>, List<DomainEvent>> entry : eventMap.entrySet()) {
                 if (isTypeEquals(eventType, entry.getKey())) {
-                    for (PayloadEvent payloadEvent : entry.getValue()) {
-                        invocations.add(new Invocation(method, this.target, payloadEvent));
+                    for (DomainEvent domainEvent : entry.getValue()) {
+                        invocations.add(new Invocation(method, this.target, domainEvent));
                     }
                 } else if (isCollectionOfType(eventType, entry.getKey())) {
                     invocations.add(new Invocation(method, this.target, entry.getValue()));

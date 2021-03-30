@@ -5,5 +5,5 @@ package org.fastddd.api.event;
  * @author: frank.li
  * @date: 2021/3/29
  */
-public interface PayloadEvent {
+public interface DomainEvent {
 }

@@ -4,28 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manage the payload event to register or unregister
+ * Manage the domain event to register
  * @author: frank.li
  * @date: 2021/3/29
  */
 public final class EventRegistry {
 
-    private static final ThreadLocal<List<PayloadEvent>> TL = ThreadLocal.withInitial(ArrayList::new);
+    private static final ThreadLocal<List<DomainEvent>> TL = ThreadLocal.withInitial(ArrayList::new);
 
-    public static void register(PayloadEvent payloadEvent) {
-        TL.get().add(payloadEvent);
+    /**
+     * Register the domain event into the event container forthe  current thead
+     * @param domainEvent
+     */
+    public static void register(DomainEvent domainEvent) {
+        TL.get().add(domainEvent);
     }
 
-    public static List<PayloadEvent> unregisterAll() {
-        List<PayloadEvent> payloadEvents = new ArrayList<>(TL.get());
+    /**
+     * Clear all the domain  events for the current thread
+     * @return
+     */
+    public static List<DomainEvent> clearAll() {
+        List<DomainEvent> domainEvents = new ArrayList<>(TL.get());
         TL.get().clear();
-        return payloadEvents;
+        return domainEvents;
     }
 
-    public static List<PayloadEvent> get() {
+    /**
+     * Returns all the domain events for the current thread
+     * @return
+     */
+    public static List<DomainEvent> get() {
         return TL.get();
     }
 
+    /**
+     * Remove the domain event container for the current thread
+     */
     public static void remove() {
         TL.remove();
     }

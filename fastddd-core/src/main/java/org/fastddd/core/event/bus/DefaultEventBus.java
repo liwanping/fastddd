@@ -4,12 +4,10 @@ import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
 import org.fastddd.core.injector.InjectorFactory;
 import org.fastddd.core.session.SessionManager;
-import org.fastddd.core.session.TransactionalSessionManager;
 import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.common.invocation.Invocation;
-import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.api.event.DomainEvent;
 import org.fastddd.api.event.EventHandler;
-import org.fastddd.core.event.listener.AnnotationEventListener;
 import org.fastddd.core.event.listener.EventListener;
 
 import java.util.ArrayList;
@@ -41,12 +39,12 @@ public class DefaultEventBus implements EventBus {
     }
 
     @Override
-    public void publish(List<PayloadEvent> payloadEvents) {
+    public void publish(List<DomainEvent> domainEvents) {
 
         List<Invocation> invocations = new ArrayList<>();
 
         for (EventListener listener : listeners) {
-            invocations.addAll(listener.onEvent(payloadEvents));
+            invocations.addAll(listener.onEvent(domainEvents));
         }
 
         sort(invocations);

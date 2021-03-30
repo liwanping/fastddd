@@ -2,7 +2,7 @@ package org.fastddd.core.session;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fastddd.api.event.EventRegistry;
-import org.fastddd.api.event.PayloadEvent;
+import org.fastddd.api.event.DomainEvent;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.core.event.bus.EventBus;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
@@ -67,9 +67,9 @@ public class TransactionalSession implements Session {
     }
 
     protected void doCommit() {
-        List<PayloadEvent> payloadEvents = EventRegistry.unregisterAll();
-        if (CollectionUtils.isNotEmpty(payloadEvents)) {
-            InjectorFactory.getInstance(EventBus.class).publish(payloadEvents);
+        List<DomainEvent> domainEvents = EventRegistry.clearAll();
+        if (CollectionUtils.isNotEmpty(domainEvents)) {
+            InjectorFactory.getInstance(EventBus.class).publish(domainEvents);
             // in case new events registered after fired
             doCommit();
         }
