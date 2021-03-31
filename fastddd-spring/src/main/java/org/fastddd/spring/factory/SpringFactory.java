@@ -1,6 +1,7 @@
 package org.fastddd.spring.factory;
 
 import org.fastddd.common.exception.SystemException;
+import org.fastddd.common.factory.BeanFactory;
 import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.api.dao.DaoFactory;
 import org.fastddd.api.dao.DomainObjectDao;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Map;
  * @date: 2021/3/29
  */
 @Component
-public class SpringFactory implements DaoFactory, ApplicationContextAware {
+public class SpringFactory implements BeanFactory, DaoFactory, ApplicationContextAware {
 
     private ApplicationContext context;
 
@@ -32,6 +34,26 @@ public class SpringFactory implements DaoFactory, ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         context = applicationContext;
         FactoryBuilder.registerFactory(this);
+    }
+
+    @Override
+    public <T> T getBean(Class<T> beanType) {
+        return context.getBean(beanType);
+    }
+
+    @Override
+    public <T> T getBean(String beanName, Class<T> beanType) {
+        return context.getBean(beanName, beanType);
+    }
+
+    @Override
+    public <T> T getBean(String beanName) {
+        return (T)context.getBean(beanName);
+    }
+
+    @Override
+    public <T> Map<String, T> getBeans(Class<T> beanType) {
+        return context.getBeansOfType(beanType);
     }
 
     @Override
@@ -98,6 +120,5 @@ public class SpringFactory implements DaoFactory, ApplicationContextAware {
         }
         return false;
     }
-
 
 }

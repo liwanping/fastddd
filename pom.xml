@@ -11,8 +11,8 @@
         <module>fastddd-common</module>
         <module>fastddd-api</module>
         <module>fastddd-core</module>
-        <module>fastddd-spring</module>
         <module>fastddd-retry</module>
+        <module>fastddd-spring</module>
         <module>fastddd-sample</module>
     </modules>
 
@@ -51,7 +51,12 @@
             </dependency>
             <dependency>
                 <groupId>org.fastddd</groupId>
-                <artifactId>fastddd-retry</artifactId>
+                <artifactId>fastddd-retry-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.fastddd</groupId>
+                <artifactId>fastddd-retry-store</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -102,6 +107,17 @@
                 <version>4.1.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>1.9.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.11</version>
+            </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>

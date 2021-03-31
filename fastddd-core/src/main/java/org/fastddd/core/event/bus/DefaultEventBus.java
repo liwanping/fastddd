@@ -9,6 +9,8 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.DomainEvent;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.listener.EventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @date: 2021/3/29
  */
 public class DefaultEventBus implements EventBus {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEventBus.class);
 
     private final List<EventListener> listeners = new CopyOnWriteArrayList<>();
 

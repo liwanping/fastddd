@@ -7,7 +7,9 @@ package org.fastddd.common.invocation;
  */
 public interface InvocationHook {
 
-    void beforeInvoke(Invocation invocation);
+    boolean beforeInvoke(Invocation invocation);
 
-    void afterInvoke(Invocation invocation);
+    void afterInvoke(Invocation invocation, Object result);
+
+    void afterThrow(Invocation invocation, Throwable t);
 }

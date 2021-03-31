@@ -1,5 +1,6 @@
 package org.fastddd.common.invocation;
 
+import org.fastddd.common.exception.ReflectionRuntimeException;
 import org.fastddd.common.utils.ReflectionUtils;
 
 import java.util.HashSet;
@@ -22,22 +23,37 @@ public final class InvocationHelper {
     }
 
     public static Object doInvoke(Invocation invocation) {
-        Object result = ReflectionUtils.invokeMethod(invocation.getMethod(),
-                invocation.getTarget(),
-                invocation.getParams());
-        afterInvoke(invocation);
-        return result;
+
+        try {
+            Object result = ReflectionUtils.invokeMethod(invocation.getMethod(),
+                    invocation.getTarget(),
+                    invocation.getParams());
+            afterInvoke(invocation, result);
+            return result;
+        } catch (Throwable t) {
+            afterThrow(invocation, t);
+            throw new ReflectionRuntimeException(t);
+        }
     }
 
     public static void beforeInvoke(Invocation invocation) {
         for (InvocationHook invocationHook : invocationHooks) {
-            invocationHook.beforeInvoke(invocation);
+            if (!invocationHook.beforeInvoke(invocation)) {
+                //invocation hook chain stop
+                break;
+            }
         }
     }
 
-    public static void afterInvoke(Invocation invocation) {
+    public static void afterInvoke(Invocation invocation, Object result) {
         for (InvocationHook invocationHook : invocationHooks) {
-            invocationHook.afterInvoke(invocation);
+            invocationHook.afterInvoke(invocation, result);
+        }
+    }
+
+    public static void afterThrow(Invocation invocation, Throwable t) {
+        for (InvocationHook invocationHook : invocationHooks) {
+            invocationHook.afterThrow(invocation, t);
         }
     }
 }

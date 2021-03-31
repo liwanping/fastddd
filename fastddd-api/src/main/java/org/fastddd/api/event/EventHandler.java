@@ -1,5 +1,8 @@
 package org.fastddd.api.event;
 
+import org.fastddd.api.retry.RetryMode;
+import org.fastddd.api.retry.Retryable;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -24,4 +27,6 @@ public @interface EventHandler {
 
     // async config data
     AsyncConfig asyncConfig() default @AsyncConfig();
+
+    Retryable retryable() default @Retryable(mode= RetryMode.NONE);
 }
