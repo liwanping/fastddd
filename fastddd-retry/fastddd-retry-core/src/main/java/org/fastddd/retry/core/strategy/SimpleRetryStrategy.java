@@ -30,7 +30,7 @@ public class SimpleRetryStrategy implements RetryStrategy {
 
         Retryable retryable = RetryUtils.getRetryable(invocation);
 
-        for (int loop = 0; ; loop++) {
+        for (int loop = 1; ; loop++) {
             try {
                 return InvocationHelper.doInvoke(invocation);
             } catch (Throwable t) {
