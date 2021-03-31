@@ -7,7 +7,7 @@ import org.fastddd.common.factory.BeanFactory;
 import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHook;
-import org.fastddd.retry.core.context.RetryContext;
+import org.fastddd.retry.core.constants.RetryConstants;
 import org.fastddd.retry.core.factory.RetryTransactionFactory;
 import org.fastddd.retry.core.model.RetryTransaction;
 import org.fastddd.retry.core.service.TransactionStoreService;
@@ -31,11 +31,11 @@ public class RetryStoreInvocationHook implements InvocationHook {
             return true;
         }
 
-        RetryTransaction retryTransaction = RetryContext.get().getTransaction(invocation);
+        RetryTransaction retryTransaction = getRetryTransaction(invocation);
         if (retryTransaction == null) {
             //save new transaction
             retryTransaction = RetryTransactionFactory.buildRetryTransaction(invocation);
-            RetryContext.get().putTransaction(invocation, retryTransaction);
+            invocation.putContextValue(RetryConstants.RETRY_TRANSACTION, retryTransaction);
             getTransactionStoreService(retryable).save(retryTransaction);
         }
         return true;
@@ -49,7 +49,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
             return;
         }
 
-        RetryTransaction retryTransaction = RetryContext.get().getTransaction(invocation);
+        RetryTransaction retryTransaction = getRetryTransaction(invocation);
         //remove transaction after success
         getTransactionStoreService(retryable).remove(retryTransaction);
     }
@@ -62,7 +62,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
             return;
         }
 
-        RetryTransaction retryTransaction = RetryContext.get().getTransaction(invocation);
+        RetryTransaction retryTransaction = getRetryTransaction(invocation);
         int retryCount = retryTransaction.getRetryCount() + 1;
         if (RetryUtils.canRetry(retryable, t, retryCount)) {
             //increase retry count and update
@@ -70,6 +70,10 @@ public class RetryStoreInvocationHook implements InvocationHook {
             retryTransaction.setRemark(t.getMessage());
             getTransactionStoreService(retryable).update(retryTransaction);
         }
+    }
+
+    private static RetryTransaction getRetryTransaction(Invocation invocation) {
+        return invocation.getContextValue(RetryConstants.RETRY_TRANSACTION, RetryTransaction.class);
     }
 
     private static TransactionStoreService getTransactionStoreService(Retryable retryable) {

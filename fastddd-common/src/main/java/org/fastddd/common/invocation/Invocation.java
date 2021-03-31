@@ -2,6 +2,8 @@ package org.fastddd.common.invocation;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Invocation class to hold the required info for invoking
@@ -13,6 +15,8 @@ public final class Invocation {
     private final Method method;
     private final Object target;
     private final Object[] params;
+
+    private final Map<String, Object> context = new HashMap<>();
 
     public Invocation(Method method, Object target, Object... params) {
         this.method = method;
@@ -32,12 +36,25 @@ public final class Invocation {
         return params;
     }
 
+    public void putContextValue(String key, Object value) {
+        context.put(key, value);
+    }
+
+    public <T> T getContextValue(String key, Class<T> valueType) {
+        return (T)context.get(key);
+    }
+
+    public Object getContextValue(String key) {
+        return context.get(key);
+    }
+
     @Override
     public String toString() {
         return "Invocation{" +
                 "method=" + method +
                 ", target=" + target +
                 ", params=" + Arrays.toString(params) +
+                ", context=" + context +
                 '}';
     }
 }
