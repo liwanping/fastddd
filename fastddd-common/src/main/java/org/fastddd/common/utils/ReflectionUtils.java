@@ -12,9 +12,9 @@ import java.lang.reflect.Method;
  */
 public class ReflectionUtils {
 
-    public static <T extends Annotation> T getAnnotation(Method method, Class<T> annotaionType) {
+    public static <T extends Annotation> T getAnnotation(Method method, Class<T> annotationType) {
 
-        T annotation = (T)method.getAnnotation(annotaionType);
+        T annotation = (T)method.getAnnotation(annotationType);
         if (annotation != null) {
             return annotation;
         }
@@ -23,7 +23,7 @@ public class ReflectionUtils {
         while (annotation == null && !currentClass.equals(Object.class)) {
             try {
                 Method superMethod = currentClass.getMethod(method.getName(), method.getParameterTypes());
-                annotation = superMethod.getAnnotation(annotaionType);
+                annotation = superMethod.getAnnotation(annotationType);
             } catch (NoSuchMethodException e) {
                 // ignore
             }

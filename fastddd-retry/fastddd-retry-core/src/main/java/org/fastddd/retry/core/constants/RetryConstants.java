@@ -6,5 +6,7 @@ package org.fastddd.retry.core.constants;
  */
 public interface RetryConstants {
 
-    String RETRY_TRANSACTION = "RETRY_TRANSACTION";
+    String RETRY_TRANSACTION = "retryTransaction";
+
+    String RETRY_LAUNCHER = "retryLauncher";
 }

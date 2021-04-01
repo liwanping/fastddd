@@ -8,6 +8,7 @@ import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHook;
 import org.fastddd.retry.core.constants.RetryConstants;
+import org.fastddd.retry.core.constants.RetryLauncher;
 import org.fastddd.retry.core.factory.RetryTransactionFactory;
 import org.fastddd.retry.core.model.RetryTransaction;
 import org.fastddd.retry.core.service.TransactionStoreService;
@@ -33,9 +34,10 @@ public class RetryStoreInvocationHook implements InvocationHook {
 
         RetryTransaction retryTransaction = getRetryTransaction(invocation);
         if (retryTransaction == null) {
-            //save new transaction
+            //for the first invoking, save new transaction
             retryTransaction = RetryTransactionFactory.buildRetryTransaction(invocation);
             invocation.putContextValue(RetryConstants.RETRY_TRANSACTION, retryTransaction);
+            invocation.putContextValue(RetryConstants.RETRY_LAUNCHER, RetryLauncher.WORKFLOW);
             getTransactionStoreService(retryable).save(retryTransaction);
         }
         return true;
