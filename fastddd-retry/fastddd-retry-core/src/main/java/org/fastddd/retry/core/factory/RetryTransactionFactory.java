@@ -14,7 +14,7 @@ public class RetryTransactionFactory {
     public static RetryTransaction buildRetryTransaction(Invocation invocation) {
         Retryable retryable = RetryUtils.getRetryable(invocation);
         RetryTransaction retryTransaction = new RetryTransaction();
-        retryTransaction.setRetryLimit(retryable.retryLimit());
+        retryTransaction.setMaxAttempts(retryable.maxAttempts());
         return retryTransaction;
     }
 }

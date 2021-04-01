@@ -63,10 +63,11 @@ public class RetryStoreInvocationHook implements InvocationHook {
         }
 
         RetryTransaction retryTransaction = getRetryTransaction(invocation);
-        int retryCount = retryTransaction.getRetryCount() + 1;
-        if (RetryUtils.canRetry(retryable, t, retryCount)) {
-            //increase retry count and update
-            retryTransaction.setRetryCount(retryCount);
+        //increase retried count
+        int retriedCount = retryTransaction.getRetriedCount() + 1;
+        if (RetryUtils.canRetry(retryable, t, retriedCount)) {
+            //update retry transaction
+            retryTransaction.setRetriedCount(retriedCount);
             retryTransaction.setRemark(t.getMessage());
             getTransactionStoreService(retryable).update(retryTransaction);
         }

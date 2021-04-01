@@ -6,26 +6,26 @@ package org.fastddd.retry.core.model;
  */
 public class RetryTransaction {
 
-    private int retryCount;
+    private int retriedCount;
 
-    private int retryLimit;
+    private int maxAttempts;
 
     private String remark;
 
-    public int getRetryCount() {
-        return retryCount;
+    public int getRetriedCount() {
+        return retriedCount;
     }
 
-    public void setRetryCount(int retryCount) {
-        this.retryCount = retryCount;
+    public void setRetriedCount(int retriedCount) {
+        this.retriedCount = retriedCount;
     }
 
-    public int getRetryLimit() {
-        return retryLimit;
+    public int getMaxAttempts() {
+        return maxAttempts;
     }
 
-    public void setRetryLimit(int retryLimit) {
-        this.retryLimit = retryLimit;
+    public void setMaxAttempts(int maxAttempts) {
+        this.maxAttempts = maxAttempts;
     }
 
     public String getRemark() {

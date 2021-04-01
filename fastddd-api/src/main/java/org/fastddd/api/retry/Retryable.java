@@ -10,7 +10,7 @@ public @interface Retryable {
 
     RetryMode mode() default RetryMode.SIMPLE;
 
-    int retryLimit() default 3;
+    int maxAttempts() default 3;
 
     long retryIntervalInMillis() default 100;
 

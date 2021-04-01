@@ -26,8 +26,8 @@ public class RetryUtils {
         return ReflectionUtils.getAnnotation(invocation.getMethod(), Retryable.class);
     }
 
-    public static boolean canRetry(Retryable retryable, Throwable t, int retryCount) {
-        return retryCount < retryable.retryLimit() && retryForThrowable(retryable, t);
+    public static boolean canRetry(Retryable retryable, Throwable t, int retriedCount) {
+        return retriedCount < retryable.maxAttempts() && retryForThrowable(retryable, t);
     }
 
     private static boolean retryForThrowable(Retryable retryable, Throwable t) {
