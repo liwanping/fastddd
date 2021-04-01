@@ -9,11 +9,11 @@ import org.fastddd.common.invocation.InvocationHelper;
  * @author: frank.li
  * @date: 2021/3/30
  */
-public class NoneRetryStrategy implements RetryStrategy {
+public class NeverRetryStrategy implements RetryStrategy {
 
     @Override
     public boolean isQualified(Retryable retryable) {
-        return RetryMode.NONE == retryable.mode();
+        return RetryMode.NEVER == retryable.mode();
     }
 
     @Override

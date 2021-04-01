@@ -28,5 +28,5 @@ public @interface EventHandler {
     // async config data
     AsyncConfig asyncConfig() default @AsyncConfig();
 
-    Retryable retryable() default @Retryable(mode= RetryMode.NONE);
+    Retryable retryable() default @Retryable(mode= RetryMode.NEVER);
 }

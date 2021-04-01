@@ -5,7 +5,6 @@ import org.fastddd.api.retry.Retryable;
 import org.fastddd.common.exception.ReflectionRuntimeException;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHelper;
-import org.fastddd.retry.core.RetryAspect;
 import org.fastddd.retry.core.utils.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
