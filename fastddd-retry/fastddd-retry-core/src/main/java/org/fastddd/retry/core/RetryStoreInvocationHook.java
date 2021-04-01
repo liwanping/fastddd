@@ -38,6 +38,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
             retryTransaction = RetryTransactionFactory.buildRetryTransaction(invocation);
             invocation.putContextValue(RetryConstants.RETRY_TRANSACTION, retryTransaction);
             invocation.putContextValue(RetryConstants.RETRY_LAUNCHER, RetryLauncher.WORKFLOW);
+            LOGGER.info("save retry transaction: {}", retryTransaction);
             getTransactionStoreService(retryable).save(retryTransaction);
         }
         return true;
@@ -52,7 +53,9 @@ public class RetryStoreInvocationHook implements InvocationHook {
         }
 
         RetryTransaction retryTransaction = getRetryTransaction(invocation);
+
         //remove transaction after success
+        LOGGER.info("remove retry transaction: {}", retryTransaction);
         getTransactionStoreService(retryable).remove(retryTransaction);
     }
 
@@ -71,6 +74,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
             //update retry transaction
             retryTransaction.setRetriedCount(retriedCount);
             retryTransaction.setRemark(t.getMessage());
+            LOGGER.info("update retry transaction: {}", retryTransaction);
             getTransactionStoreService(retryable).update(retryTransaction);
         }
     }
