@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fastddd.sample.service.infrastructure.mysql.OrderLineDao">
+
+    <resultMap id="result" type="org.fastddd.sample.service.domain.entity.OrderLine">
+        <result property="id" column="order_line_id"/>
+        <result property="itemId" column="item_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="order" javaType="org.fastddd.sample.service.domain.entity.Order">
+            <result property="id" column="order_id"/>
+        </association>
+    </resultMap>
+
+    <sql id="sql_select">
+        SELECT order_line_id,order_id,item_id,quantity,unit_price,create_time,update_time
+        FROM tb_order_line
+    </sql>
+
+    <select id="findById" resultMap="result">
+        <include refid="sql_select"/>
+        WHERE order_line_id = #{id}
+    </select>
+
+    <select id="findByOrderId" resultMap="result">
+        <include refid="sql_select"/>
+        WHERE order_id = #{orderId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.fastddd.sample.service.domain.entity.OrderLine">
+        INSERT INTO tb_order_line(order_id,item_id,quantity,unit_price)
+        VALUES(#{order.id},#{itemId},#{quantity},#{unitPrice})
+    </insert>
+
+    <insert id="insertAll" useGeneratedKeys="true" keyProperty="id" parameterType="org.fastddd.sample.service.domain.entity.OrderLine">
+        INSERT INTO tb_order_line(order_id,item_id,quantity,unit_price)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.order.id},#{item.itemId},#{item.quantity},#{item.unitPrice})
+        </foreach>
+    </insert>
+
+</mapper>

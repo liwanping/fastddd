@@ -5,7 +5,7 @@ import org.fastddd.api.entity.DomainObject;
 import java.io.Serializable;
 
 /**
- * Basic interface of dao for domain object
+ * Basic interface of mysql for domain object
  * @author: frank.li
  * @date: 2021/3/29
  */

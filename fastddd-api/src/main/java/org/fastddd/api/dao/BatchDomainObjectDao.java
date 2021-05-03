@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Batch dao operations for domain object
+ * Batch mysql operations for domain object
  * @author: frank.li
  * @date: 2021/3/29
  */
@@ -17,7 +17,11 @@ public interface BatchDomainObjectDao<T extends DomainObject<ID>, ID extends Ser
 
     int insertAll(Collection<T> entities);
 
-    int updateAll(Collection<T> entities);
+    default int updateAll(Collection<T> entities) {
+        return 0;
+    }
 
-    int deleteAll(Collection<T> entities);
+    default int deleteAll(Collection<T> entities) {
+        return 0;
+    }
 }

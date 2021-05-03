@@ -6,6 +6,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 
+import javax.sql.DataSource;
+
 /**
  * Enhanced datasource transaction manager
  * @author: frank.li
@@ -14,6 +16,14 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 public class EnhancedDataSourceTransactionManager extends DataSourceTransactionManager {
 
     private SessionManager sessionFactory = InjectorFactory.getInstance(SessionManager.class);
+
+    public EnhancedDataSourceTransactionManager() {
+        super();
+    }
+
+    public EnhancedDataSourceTransactionManager(DataSource dataSource) {
+        super(dataSource);
+    }
 
     @Override
     protected void doBegin(Object transaction, TransactionDefinition definition) {

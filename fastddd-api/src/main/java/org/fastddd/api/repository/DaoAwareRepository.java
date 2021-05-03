@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The repository that will implement the basic operations with the defined dao instance
+ * The repository that will implement the basic operations with the defined mysql instance
  * @author: frank.li
  * @date: 2021/3/29
  */

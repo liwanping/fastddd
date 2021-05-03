@@ -114,7 +114,7 @@ public class SpringFactory implements BeanFactory, DaoFactory, ApplicationContex
                 if (providedClass == requiredClass) {
                     return true;
                 }
-                // no exactly matched dao defined, use the dao of its super class instead
+                // no exactly matched mysql defined, use the mysql of its super class instead
                 requiredClass = requiredClass.getSuperclass();
             }
         }

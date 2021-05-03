@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public abstract class AbstractAggregateRoot<ID extends Serializable> extends AbstractDomainObject<ID> implements AggregateRoot<ID> {
 
+
     public void register(DomainEvent event) {
         EventRegistry.register(event);
     }

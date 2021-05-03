@@ -1,6 +1,7 @@
 package org.fastddd.api.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The abstract domain object
@@ -11,6 +12,10 @@ public abstract class AbstractDomainObject<ID extends Serializable> implements D
 
     private boolean isNew;
 
+    private Date createTime;
+
+    private Date updateTime;
+
     @Override
     public boolean isNew() {
         return isNewId() || isNew;
@@ -18,6 +23,14 @@ public abstract class AbstractDomainObject<ID extends Serializable> implements D
 
     protected void setNew(boolean isNew) {
         this.isNew = isNew;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     @Override

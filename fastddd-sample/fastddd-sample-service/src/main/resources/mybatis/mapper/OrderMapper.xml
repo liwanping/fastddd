@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fastddd.sample.service.infrastructure.mysql.OrderDao">
+
+    <resultMap id="result" type="org.fastddd.sample.service.domain.entity.Order">
+        <result property="id" column="order_id"/>
+        <result property="orderType" column="order_type"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="sql_select">
+        SELECT order_id,order_type,order_status,total_amount,create_time,update_time
+        FROM tb_order
+    </sql>
+
+    <select id="findById" resultMap="result">
+        <include refid="sql_select"/>
+        WHERE order_id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.fastddd.sample.service.domain.entity.Order">
+        INSERT INTO tb_order(order_type,order_status,total_amount)
+        VALUES(#{orderType},#{orderStatus},#{totalAmount})
+    </insert>
+
+    <update id="update" parameterType="org.fastddd.sample.service.domain.entity.Order">
+        UPDATE tb_order
+        SET order_status = #{orderStatus}
+        WHERE order_id=#{id}
+    </update>
+
+</mapper>

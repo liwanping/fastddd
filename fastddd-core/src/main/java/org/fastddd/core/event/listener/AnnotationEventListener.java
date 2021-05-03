@@ -45,7 +45,7 @@ public class AnnotationEventListener implements EventListener {
             if (!eventMap.containsKey(event.getClass())) {
                 eventMap.put(event.getClass(), new ArrayList<>());
             }
-            eventMap.get(events.getClass()).add(event);
+            eventMap.get(event.getClass()).add(event);
         }
 
         List<Invocation> invocations = new ArrayList<>();

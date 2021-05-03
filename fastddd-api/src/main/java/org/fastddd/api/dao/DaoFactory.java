@@ -5,14 +5,14 @@ import org.fastddd.api.entity.DomainObject;
 import java.io.Serializable;
 
 /**
- * The dao factory
+ * The mysql factory
  * @author: frank.li
  * @date: 2021/3/29
  */
 public interface DaoFactory {
 
     /**
-     * Retrieve the dao implementation to operate on the given entity class
+     * Retrieve the mysql implementation to operate on the given entity class
      *
      * @param entityClass
      * @param <T>

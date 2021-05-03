@@ -20,7 +20,7 @@ public @interface EventHandler {
     boolean asynchronous() default false;
 
     // Indicate if the method will be invoked after the transaction committed
-    boolean fireAfterTransaction() default false;
+    boolean fireAfterTransaction() default true;
 
     // the sequence of invocation, only make sense for synchronous
     int sequence() default 0;
