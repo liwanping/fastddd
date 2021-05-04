@@ -12,6 +12,7 @@ import org.fastddd.core.event.processor.async.AsyncConfig;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.event.processor.async.AsyncThreadFactory;
 import org.fastddd.core.event.processor.async.AsyncUtils;
+import org.fastddd.retry.core.utils.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,7 @@ public class AsyncDisruptor implements AsyncInvoker {
             LOGGER.warn("Disruptor ring buffer is full, event handler will be executed in sync mode for {}.{}",
                     invocation.getTarget().getClass().getSimpleName(),
                     invocation.getMethod().getName());
-            InvocationHelper.doInvoke(invocation);
+            RetryUtils.doWithRetry(invocation);
         }
     }
 
