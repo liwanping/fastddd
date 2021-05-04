@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>org.fastddd</groupId>
-            <artifactId>fastddd-spring</artifactId>
+            <artifactId>fastddd-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author: frank.li
  * @date: 2021/3/29
  */
-@Component
 public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcessor, DisposableBean {
 
     @Override

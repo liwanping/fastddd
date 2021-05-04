@@ -23,7 +23,6 @@ import java.util.Map;
  * @author: frank.li
  * @date: 2021/3/29
  */
-@Component
 public class SpringFactory implements BeanFactory, DaoFactory, ApplicationContextAware {
 
     private ApplicationContext context;
