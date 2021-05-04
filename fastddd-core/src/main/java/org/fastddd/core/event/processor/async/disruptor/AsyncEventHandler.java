@@ -4,6 +4,7 @@ import com.lmax.disruptor.LifecycleAware;
 import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceReportingEventHandler;
 import org.fastddd.common.invocation.InvocationHelper;
+import org.fastddd.retry.core.utils.RetryUtils;
 
 /**
  * @author: frank.li
@@ -19,7 +20,7 @@ public class AsyncEventHandler implements SequenceReportingEventHandler<AsyncEve
     @Override
     public void onEvent(AsyncEvent asyncEvent, long sequence, boolean endOfBatch) throws Exception {
 
-        InvocationHelper.doInvoke(asyncEvent.getInvocation());
+        RetryUtils.doWithRetry(asyncEvent.getInvocation());
 
         /*
          * Notify the BatchEventProcessor that the sequence has progressed.

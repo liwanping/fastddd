@@ -1,6 +1,7 @@
 package org.fastddd.retry.core.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.fastddd.api.event.EventHandler;
 import org.fastddd.api.retry.Retryable;
 import org.fastddd.common.exception.SystemException;
 import org.fastddd.common.factory.BeanFactory;
@@ -36,6 +37,10 @@ public class RetryUtils {
     }
 
     public static Retryable getRetryable(Invocation invocation) {
+        EventHandler eventHandler = ReflectionUtils.getAnnotation(invocation.getMethod(), EventHandler.class);
+        if (eventHandler != null) {
+            return eventHandler.retryable();
+        }
         return ReflectionUtils.getAnnotation(invocation.getMethod(), Retryable.class);
     }
 

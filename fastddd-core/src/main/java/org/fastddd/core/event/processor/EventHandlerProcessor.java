@@ -6,6 +6,7 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.injector.InjectorFactory;
+import org.fastddd.retry.core.utils.RetryUtils;
 
 /**
  * Process invocation that the method is annotated with @EventHandler
@@ -19,7 +20,7 @@ public class EventHandlerProcessor {
         if (eventHandler.asynchronous()) {
             InjectorFactory.getInstance(AsyncInvoker.class).invoke(invocation);
         } else {
-            InvocationHelper.doInvoke(invocation);
+            RetryUtils.doWithRetry(invocation);
         }
     }
 }

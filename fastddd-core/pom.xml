@@ -18,6 +18,10 @@
             <artifactId>fastddd-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.fastddd</groupId>
+            <artifactId>fastddd-retry-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>

@@ -34,7 +34,7 @@ public class SimpleRetryStrategy implements RetryStrategy {
                 return InvocationHelper.doInvoke(invocation);
             } catch (Throwable t) {
                 if (RetryUtils.canRetry(retryable, t, loop)) {
-                    if (retryable.enableFastRetry() && loop == 0) {
+                    if (retryable.enableFastRetry() && loop == 1) {
                         LOGGER.warn("Invocation execution failed but fast retry enabled, will retry immediately, invocation:{}", invocation);
                         continue;
                     }
