@@ -1,21 +1,19 @@
 package org.fastddd.spring.factory;
 
-import org.fastddd.common.exception.SystemException;
-import org.fastddd.common.factory.BeanFactory;
-import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.api.dao.DaoFactory;
 import org.fastddd.api.dao.DomainObjectDao;
 import org.fastddd.api.entity.DomainObject;
+import org.fastddd.common.exception.SystemException;
+import org.fastddd.common.factory.BeanFactory;
+import org.fastddd.common.factory.FactoryBuilder;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

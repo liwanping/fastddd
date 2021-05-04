@@ -28,7 +28,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
     public boolean beforeInvoke(Invocation invocation) {
 
         Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (RetryMode.STORE != retryable.mode()) {
+        if (retryable == null || RetryMode.STORE != retryable.mode()) {
             return true;
         }
 
@@ -48,7 +48,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
     public void afterInvoke(Invocation invocation, Object result) {
 
         Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (RetryMode.STORE != retryable.mode()) {
+        if (retryable == null || RetryMode.STORE != retryable.mode()) {
             return;
         }
 
@@ -63,7 +63,7 @@ public class RetryStoreInvocationHook implements InvocationHook {
     public void afterThrow(Invocation invocation, Throwable t) {
 
         Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (RetryMode.STORE != retryable.mode()) {
+        if (retryable == null || RetryMode.STORE != retryable.mode()) {
             return;
         }
 

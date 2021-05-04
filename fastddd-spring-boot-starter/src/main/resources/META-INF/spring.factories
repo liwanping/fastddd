@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.fastddd.spring.boot.autoconfigure.FastdddAutoConfiguration,\
-org.fastddd.spring.boot.autoconfigure.MySqlAutoConfiguration
+org.fastddd.spring.boot.autoconfigure.MySqlAutoConfiguration,\
+org.fastddd.spring.boot.autoconfigure.RetryAutoConfiguration

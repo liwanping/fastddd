@@ -5,6 +5,8 @@ import org.fastddd.sample.api.dto.OrderDto;
 import org.fastddd.sample.api.dto.OrderLineDto;
 import org.fastddd.sample.api.enums.OrderTypeEnum;
 import org.fastddd.sample.service.AbstractTestCase;
+import org.fastddd.sample.service.domain.event.OrderCreatedEvent;
+import org.fastddd.sample.service.eventhandler.ErrorEventHandler;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

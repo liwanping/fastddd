@@ -10,7 +10,9 @@ import org.fastddd.core.injector.InjectorFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
+import org.springframework.core.Ordered;
+import org.springframework.core.PriorityOrdered;
+import org.springframework.core.annotation.Order;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -19,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author: frank.li
  * @date: 2021/3/29
  */
-public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcessor, DisposableBean {
+public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcessor, DisposableBean, PriorityOrdered {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -48,5 +50,10 @@ public class AnnotationEventHandlerBeanPostProcessor implements BeanPostProcesso
     @Override
     public void destroy() throws Exception {
         InjectorFactory.getInstance(AsyncInvoker.class).shutdown();
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
 }
