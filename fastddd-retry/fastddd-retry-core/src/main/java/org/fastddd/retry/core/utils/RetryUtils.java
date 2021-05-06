@@ -32,7 +32,6 @@ public class RetryUtils {
             return null;
         }
 
-        InvocationHelper.beforeInvoke(invocation);
         return RetryStrategyHelper.doWithRetry(invocation);
     }
 

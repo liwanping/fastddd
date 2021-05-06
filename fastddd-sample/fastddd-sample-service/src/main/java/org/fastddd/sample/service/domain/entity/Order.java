@@ -27,7 +27,6 @@ public class Order extends AbstractAggregateRoot<Long> {
         this.orderType = orderType;
         this.totalAmount = totalAmount;
         this.orderStatus = OrderStatusEnum.CREATED.getId();
-        this.register(new OrderCreatedEvent(this));
     }
 
     @Override
@@ -59,6 +58,10 @@ public class Order extends AbstractAggregateRoot<Long> {
     public void addOrderLine(OrderLine orderLine) {
         this.orderLines.add(orderLine);
         orderLine.setOrder(this);
+    }
+
+    public void save() {
+        this.register(new OrderCreatedEvent(this));
     }
 
     public void pay() {

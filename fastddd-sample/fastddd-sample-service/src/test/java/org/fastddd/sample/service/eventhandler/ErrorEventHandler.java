@@ -13,9 +13,14 @@ public class ErrorEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorEventHandler.class);
 
+    private int retryCount;
+
     @EventHandler(retryable = @Retryable(maxAttempts = 5))
     public void handleOrderCreatedEvent(OrderCreatedEvent event) {
-        LOGGER.info("throwing error for order created event: {}", JSON.toJSONString(event.getOrder()));
-        throw new RuntimeException("order created error!");
+        retryCount++;
+        if (retryCount % 3 != 0) {
+            LOGGER.info("throwing error for order created event: {}", JSON.toJSONString(event.getOrder()));
+            throw new RuntimeException("order created error!");
+        }
     }
 }

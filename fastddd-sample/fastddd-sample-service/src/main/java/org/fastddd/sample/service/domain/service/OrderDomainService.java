@@ -14,6 +14,7 @@ public class OrderDomainService {
 
     @Transactional(rollbackFor = Throwable.class)
     public void createOrder(Order order) {
+        order.save();
         orderRepository.save(order);
     }
 }
