@@ -1,13 +1,13 @@
-package org.fastddd.retry.store.service.remote.server;
+package org.fastddd.retry.store.redis;
 
 import org.fastddd.retry.core.model.RetryTransaction;
 import org.fastddd.retry.core.service.TransactionStoreService;
 
 /**
  * @author: frank.li
- * @date: 2021/4/1
+ * @date: 2021/3/30
  */
-public class RemoteStoreService implements TransactionStoreService {
+public class RedisStoreService implements TransactionStoreService {
 
     @Override
     public void save(RetryTransaction transaction) {

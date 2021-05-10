@@ -62,7 +62,12 @@
             </dependency>
             <dependency>
                 <groupId>org.fastddd</groupId>
-                <artifactId>fastddd-retry-store</artifactId>
+                <artifactId>fastddd-retry-store-mysql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.fastddd</groupId>
+                <artifactId>fastddd-retry-store-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
