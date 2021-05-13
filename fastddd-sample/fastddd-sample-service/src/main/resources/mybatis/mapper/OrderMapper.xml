@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.fastddd.sample.service.infrastructure.mysql.OrderDao">
+<mapper namespace="org.fastddd.sample.service.infra.mysql.OrderDao">
 
     <resultMap id="result" type="org.fastddd.sample.service.domain.entity.Order">
         <result property="id" column="order_id"/>

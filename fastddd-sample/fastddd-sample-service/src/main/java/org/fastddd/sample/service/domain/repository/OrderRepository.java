@@ -3,7 +3,7 @@ package org.fastddd.sample.service.domain.repository;
 import org.fastddd.api.repository.DaoAwareRepository;
 import org.fastddd.sample.service.domain.entity.Order;
 import org.fastddd.sample.service.domain.entity.OrderLine;
-import org.fastddd.sample.service.infrastructure.mysql.OrderLineDao;
+import org.fastddd.sample.service.infra.mysql.OrderLineDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
