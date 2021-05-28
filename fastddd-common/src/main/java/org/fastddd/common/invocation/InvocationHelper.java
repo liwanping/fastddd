@@ -38,7 +38,8 @@ public final class InvocationHelper {
 
     public static void beforeInvoke(Invocation invocation) {
         for (InvocationHook invocationHook : invocationHooks) {
-            if (!invocationHook.beforeInvoke(invocation)) {
+            if (invocationHook.isQualified(invocation) &&
+                    !invocationHook.beforeInvoke(invocation)) {
                 //invocation hook chain stop
                 break;
             }
@@ -47,13 +48,17 @@ public final class InvocationHelper {
 
     public static void afterInvoke(Invocation invocation, Object result) {
         for (InvocationHook invocationHook : invocationHooks) {
-            invocationHook.afterInvoke(invocation, result);
+            if (invocationHook.isQualified(invocation)) {
+                invocationHook.afterInvoke(invocation, result);
+            }
         }
     }
 
     public static void afterThrow(Invocation invocation, Throwable t) {
         for (InvocationHook invocationHook : invocationHooks) {
-            invocationHook.afterThrow(invocation, t);
+            if (invocationHook.isQualified(invocation)) {
+                invocationHook.afterThrow(invocation, t);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.retry.core.constants.RetryConstants;
 import org.fastddd.retry.core.constants.RetryLauncher;
+import org.fastddd.retry.core.model.RetryContext;
 import org.fastddd.retry.core.utils.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,8 @@ public class StoreRetryStrategy implements RetryStrategy {
             // call directly since the next retry will be triggered by the job
             return InvocationHelper.doInvoke(invocation);
         } catch (ReflectionRuntimeException ex) {
-            if (RetryLauncher.WORKFLOW == invocation.getContextValue(RetryConstants.RETRY_LAUNCHER, RetryLauncher.class)) {
+            RetryContext retryContext = invocation.getContextValue(RetryConstants.RETRY_CONTEXT_KEY, RetryContext.class);
+            if (retryContext != null && RetryLauncher.WORKFLOW == retryContext.getRetryLauncher()) {
                 Retryable retryable = RetryUtils.getRetryable(invocation);
                 if (retryable.enableFastRetry()) {
                     LOGGER.warn("Invocation execution failed but fast retry enabled, will retry immediately, invocation:{}", invocation);

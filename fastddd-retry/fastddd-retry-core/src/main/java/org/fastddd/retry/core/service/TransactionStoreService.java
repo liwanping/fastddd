@@ -1,5 +1,6 @@
 package org.fastddd.retry.core.service;
 
+import org.fastddd.common.invocation.Invocation;
 import org.fastddd.retry.core.model.RetryTransaction;
 
 /**

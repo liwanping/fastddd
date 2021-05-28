@@ -7,6 +7,8 @@ package org.fastddd.common.invocation;
  */
 public interface InvocationHook {
 
+    boolean isQualified(Invocation invocation);
+
     boolean beforeInvoke(Invocation invocation);
 
     void afterInvoke(Invocation invocation, Object result);

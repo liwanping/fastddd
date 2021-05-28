@@ -10,7 +10,9 @@ import org.fastddd.common.invocation.InvocationHook;
 import org.fastddd.retry.core.constants.RetryConstants;
 import org.fastddd.retry.core.constants.RetryLauncher;
 import org.fastddd.retry.core.factory.RetryTransactionFactory;
+import org.fastddd.retry.core.model.RetryContext;
 import org.fastddd.retry.core.model.RetryTransaction;
+import org.fastddd.retry.core.service.RetryTransactionHelper;
 import org.fastddd.retry.core.service.TransactionStoreService;
 import org.fastddd.retry.core.utils.RetryUtils;
 import org.slf4j.Logger;
@@ -25,21 +27,21 @@ public class RetryStoreInvocationHook implements InvocationHook {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetryStoreInvocationHook.class);
 
     @Override
+    public boolean isQualified(Invocation invocation) {
+        Retryable retryable = RetryUtils.getRetryable(invocation);
+        return retryable != null && RetryMode.STORE == retryable.mode();
+    }
+
+    @Override
     public boolean beforeInvoke(Invocation invocation) {
 
-        Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (retryable == null || RetryMode.STORE != retryable.mode()) {
-            return true;
-        }
-
-        RetryTransaction retryTransaction = getRetryTransaction(invocation);
-        if (retryTransaction == null) {
-            //for the first invoking, save new transaction
-            retryTransaction = RetryTransactionFactory.buildRetryTransaction(invocation);
-            invocation.putContextValue(RetryConstants.RETRY_TRANSACTION, retryTransaction);
-            invocation.putContextValue(RetryConstants.RETRY_LAUNCHER, RetryLauncher.WORKFLOW);
-            LOGGER.info("save retry transaction: {}", retryTransaction);
-            getTransactionStoreService(retryable).save(retryTransaction);
+        RetryContext retryContext = getRetryContext(invocation);
+        if (retryContext == null) {
+            //for the first invoking, init retry context
+            retryContext = new RetryContext().setRetryLauncher(RetryLauncher.WORKFLOW);
+            invocation.putContextValue(RetryConstants.RETRY_CONTEXT_KEY, retryContext);
+            //save transaction
+            RetryTransactionHelper.save(invocation);
         }
         return true;
     }
@@ -47,47 +49,31 @@ public class RetryStoreInvocationHook implements InvocationHook {
     @Override
     public void afterInvoke(Invocation invocation, Object result) {
 
-        Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (retryable == null || RetryMode.STORE != retryable.mode()) {
-            return;
-        }
-
-        RetryTransaction retryTransaction = getRetryTransaction(invocation);
-
+        RetryContext retryContext = getRetryContext(invocation);
         //remove transaction after success
-        LOGGER.info("remove retry transaction: {}", retryTransaction);
-        getTransactionStoreService(retryable).remove(retryTransaction);
+        RetryTransactionHelper.remove(invocation);
     }
 
     @Override
     public void afterThrow(Invocation invocation, Throwable t) {
 
+        RetryContext retryContext = getRetryContext(invocation);
+
         Retryable retryable = RetryUtils.getRetryable(invocation);
-        if (retryable == null || RetryMode.STORE != retryable.mode()) {
-            return;
-        }
 
-        RetryTransaction retryTransaction = getRetryTransaction(invocation);
         //increase retried count
-        int retriedCount = retryTransaction.getRetriedCount() + 1;
+        int retriedCount = retryContext.getRetriedCount() + 1;
+
         if (RetryUtils.canRetry(retryable, t, retriedCount)) {
-            //update retry transaction
-            retryTransaction.setRetriedCount(retriedCount);
-            retryTransaction.setRemark(t.getMessage());
-            LOGGER.info("update retry transaction: {}", retryTransaction);
-            getTransactionStoreService(retryable).update(retryTransaction);
+            //update retry context
+            retryContext.setRetriedCount(retriedCount);
+            retryContext.setRemark(t.getMessage());
+            //update transaction for retrying
+            RetryTransactionHelper.update(invocation);
         }
     }
 
-    private static RetryTransaction getRetryTransaction(Invocation invocation) {
-        return invocation.getContextValue(RetryConstants.RETRY_TRANSACTION, RetryTransaction.class);
-    }
-
-    private static TransactionStoreService getTransactionStoreService(Retryable retryable) {
-        BeanFactory beanFactory = FactoryBuilder.getFactory(BeanFactory.class);
-        if (StringUtils.isNotBlank(retryable.transactionStoreService())) {
-            return beanFactory.getBean(retryable.transactionStoreService(), TransactionStoreService.class);
-        }
-        return beanFactory.getBean(TransactionStoreService.class);
+    private RetryContext getRetryContext(Invocation invocation) {
+        return invocation.getContextValue(RetryConstants.RETRY_CONTEXT_KEY, RetryContext.class);
     }
 }
