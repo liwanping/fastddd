@@ -8,7 +8,7 @@ import java.util.Set;
  * @author: frank.li
  * @date: 2021/3/29
  */
-public final class SessionHelper {
+final class SessionHelper {
 
     private static Set<SessionLifecycleListener> sessionLifecycleListeners = new HashSet<>();
 
@@ -19,25 +19,25 @@ public final class SessionHelper {
         }
     }
 
-    public static void onBegin(Session session) {
+    static void onBegin(Session session) {
         for (SessionLifecycleListener sessionLifecycleListener : sessionLifecycleListeners) {
             sessionLifecycleListener.onBegin(session);
         }
     }
 
-    public static void onCommit(Session session) {
+    static void onCommit(Session session) {
         for (SessionLifecycleListener sessionLifecycleListener : sessionLifecycleListeners) {
             sessionLifecycleListener.onCommit(session);
         }
     }
 
-    public static void onRollback(Session session) {
+    static void onRollback(Session session) {
         for (SessionLifecycleListener sessionLifecycleListener : sessionLifecycleListeners) {
             sessionLifecycleListener.onRollback(session);
         }
     }
 
-    public static void onComplete(Session session) {
+    static void onComplete(Session session) {
         for (SessionLifecycleListener sessionLifecycleListener : sessionLifecycleListeners) {
             sessionLifecycleListener.onComplete(session);
         }

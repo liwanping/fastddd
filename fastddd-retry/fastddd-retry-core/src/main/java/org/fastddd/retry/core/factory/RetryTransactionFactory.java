@@ -11,6 +11,7 @@ import org.fastddd.retry.core.utils.RetryUtils;
  */
 public class RetryTransactionFactory {
 
+
     public static RetryTransaction buildRetryTransaction(Invocation invocation) {
         Retryable retryable = RetryUtils.getRetryable(invocation);
         RetryTransaction retryTransaction = new RetryTransaction();

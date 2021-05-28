@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  */
 public class EnhancedDataSourceTransactionManager extends DataSourceTransactionManager {
 
-    private SessionManager sessionFactory = InjectorFactory.getInstance(SessionManager.class);
+    private SessionManager sessionManager = InjectorFactory.getInstance(SessionManager.class);
 
     public EnhancedDataSourceTransactionManager() {
         super();
@@ -28,18 +28,18 @@ public class EnhancedDataSourceTransactionManager extends DataSourceTransactionM
     @Override
     protected void doBegin(Object transaction, TransactionDefinition definition) {
         super.doBegin(transaction, definition);
-        sessionFactory.registerSession(true);
+        sessionManager.registerSession(true);
     }
 
     @Override
     protected void doCommit(DefaultTransactionStatus status) {
-        sessionFactory.requireSession().commit();
+        sessionManager.requireSession().commit();
         super.doCommit(status);
     }
 
     @Override
     protected void doRollback(DefaultTransactionStatus status) {
-        sessionFactory.requireSession().rollback();
+        sessionManager.requireSession().rollback();
         super.doRollback(status);
     }
 
@@ -47,9 +47,9 @@ public class EnhancedDataSourceTransactionManager extends DataSourceTransactionM
     protected void doCleanupAfterCompletion(Object transaction) {
         try {
             super.doCleanupAfterCompletion(transaction);
-            sessionFactory.requireSession().cleanupAfterCompletion();
+            sessionManager.requireSession().cleanupAfterCompletion();
         } finally {
-            sessionFactory.closeSession();
+            sessionManager.closeSession();
         }
     }
 }

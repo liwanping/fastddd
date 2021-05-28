@@ -1,5 +1,8 @@
 package org.fastddd.core.session;
 
+import org.fastddd.common.id.XID;
+import org.fastddd.common.utils.IpUtils;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -11,6 +14,9 @@ import java.util.Objects;
 public class TransactionalSessionManager implements SessionManager {
 
     private static final ThreadLocal<Deque<SessionEntry>> CURRENT = new ThreadLocal<>();
+
+    public TransactionalSessionManager() {
+    }
 
     @Override
     public boolean registerSession(boolean requireNew) {

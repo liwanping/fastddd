@@ -49,7 +49,6 @@ public class RetryStoreInvocationHook implements InvocationHook {
     @Override
     public void afterInvoke(Invocation invocation, Object result) {
 
-        RetryContext retryContext = getRetryContext(invocation);
         //remove transaction after success
         RetryTransactionHelper.remove(invocation);
     }
