@@ -18,12 +18,8 @@ package org.fastddd.common.id;
 
 import org.fastddd.common.utils.IpUtils;
 
-/**
- * The type Xid.
- *
- * @author slievrly
- */
-public class XID {
+
+public class XidUtils {
 
     private static final String IP_PORT_SPLIT_CHAR = ":";
 
@@ -64,7 +60,7 @@ public class XID {
      */
     public static String getIpAddress() {
         if (ipAddress == null) {
-            synchronized (XID.class) {
+            synchronized (XidUtils.class) {
                 if (ipAddress == null) {
                     ipAddress = IpUtils.getLocalIp();
                 }
@@ -79,7 +75,7 @@ public class XID {
      * @param ipAddress the ip address
      */
     public static void setIpAddress(String ipAddress) {
-        XID.ipAddress = ipAddress;
+        XidUtils.ipAddress = ipAddress;
     }
 
 }

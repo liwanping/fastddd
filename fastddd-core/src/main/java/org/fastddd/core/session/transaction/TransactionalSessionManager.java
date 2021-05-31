@@ -1,7 +1,8 @@
-package org.fastddd.core.session;
+package org.fastddd.core.session.transaction;
 
-import org.fastddd.common.id.XID;
-import org.fastddd.common.utils.IpUtils;
+import org.fastddd.core.session.Session;
+import org.fastddd.core.session.SessionManager;
+import org.fastddd.core.session.transaction.TransactionalSession;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
