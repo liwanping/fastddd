@@ -1,3 +1,0 @@
-org.fastddd.retry.core.strategy.NeverRetryStrategy
-org.fastddd.retry.core.strategy.SimpleRetryStrategy
-org.fastddd.retry.core.strategy.StoreRetryStrategy

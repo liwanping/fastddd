@@ -11,7 +11,7 @@
         <module>fastddd-common</module>
         <module>fastddd-api</module>
         <module>fastddd-core</module>
-        <module>fastddd-retry</module>
+        <module>fastddd-retry-store</module>
         <module>fastddd-spring</module>
         <module>fastddd-sample</module>
         <module>fastddd-spring-boot-starter</module>
@@ -53,11 +53,6 @@
             <dependency>
                 <groupId>org.fastddd</groupId>
                 <artifactId>fastddd-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.fastddd</groupId>
-                <artifactId>fastddd-retry-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
