@@ -1,21 +1,12 @@
 package org.fastddd.core.retry.utils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.api.retry.Retryable;
-import org.fastddd.common.exception.SystemException;
-import org.fastddd.common.factory.BeanFactory;
-import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.utils.ReflectionUtils;
-import org.fastddd.core.retry.constants.RetryConstants;
-import org.fastddd.core.retry.constants.RetryLauncher;
-import org.fastddd.core.retry.model.RetryContext;
 import org.fastddd.core.retry.strategy.RetryStrategyHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 
 /**
  * @author: frank.li
@@ -43,11 +34,23 @@ public class RetryUtils {
 
     private static boolean retryForThrowable(Retryable retryable, Throwable t) {
 
-        if (retryable.notRetryableForExceptions().length > 0) {
+        if (retryable.include().length > 0) {
             Throwable current = t;
             while (current != null) {
-                for (Class<?> notRetryableException : retryable.notRetryableForExceptions()) {
-                    if (notRetryableException.isAssignableFrom(current.getClass())) {
+                for (Class<?> includedException : retryable.include()) {
+                    if (includedException.isAssignableFrom(current.getClass())) {
+                        return true;
+                    }
+                }
+                current = current.getCause();
+            }
+            return false;
+        }
+        if (retryable.exclude().length > 0) {
+            Throwable current = t;
+            while (current != null) {
+                for (Class<?> excludedException : retryable.exclude()) {
+                    if (excludedException.isAssignableFrom(current.getClass())) {
                         return false;
                     }
                 }

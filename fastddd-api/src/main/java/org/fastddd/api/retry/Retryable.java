@@ -14,12 +14,12 @@ import java.lang.annotation.Target;
 public @interface Retryable {
 
     /**
-     * retry mode
+     * Retry mode
      */
     RetryMode mode() default RetryMode.SIMPLE;
 
     /**
-     * max attempt count to invoke, including the first invoking
+     * Max attempt count to invoke, including the first invoking
      */
     int maxAttempts() default 3;
 
@@ -27,19 +27,27 @@ public @interface Retryable {
      * retry interval time in milliseconds
      */
     long retryIntervalInMillis() default 10;
-    
+
     /**
-     * indicate if fast retry enabled, if true, will invoke the method immediately after the first throwing
+     * Indicate if fast retry enabled, if true, will invoke the method immediately after the first throwing
      */
     boolean enableFastRetry() default true;
 
     /**
-     * define the exceptions that will stop retrying if they are thrown
+     * Exception types that are retryable. Defaults to empty (and if excludes is also
+     * empty all exceptions are retried).
      */
-    Class<? extends Throwable>[] notRetryableForExceptions() default {};
+    Class<? extends Throwable>[] include() default {};
 
     /**
-     * transaction store service defined if store mode
+     * Exception types that are not retryable. Defaults to empty (and if includes is also
+     * empty all exceptions are retried).
+     * If includes is empty but excludes is not, all not excluded exceptions are retried
+     */
+    Class<? extends Throwable>[] exclude() default {};
+
+    /**
+     * Transaction store service defined if store mode
      * in store mode, will handle this invocation as a transaction
      * invocation retrying will be triggered by the transaction recovery job
      * the  job will check the stored transaction context data and invoke the method periodically
@@ -47,7 +55,7 @@ public @interface Retryable {
     String transactionStoreService() default "";
 
     /**
-     * transaction check method to check if retrying method should be invoked
+     * Transaction check method to check if retrying method should be invoked
      * it's often used for the business status check
      * NOTE: this method should return boolean value
      */
