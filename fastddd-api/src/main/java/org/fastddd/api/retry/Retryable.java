@@ -17,18 +17,22 @@ public @interface Retryable {
      * retry mode
      */
     RetryMode mode() default RetryMode.SIMPLE;
+
     /**
      * max attempt count to invoke, including the first invoking
      */
     int maxAttempts() default 3;
+
     /**
      * retry interval time in milliseconds
      */
     long retryIntervalInMillis() default 10;
+    
     /**
      * indicate if fast retry enabled, if true, will invoke the method immediately after the first throwing
      */
     boolean enableFastRetry() default true;
+
     /**
      * define the exceptions that will stop retrying if they are thrown
      */
