@@ -1,4 +1,4 @@
-package org.fastddd.core.session.transaction;
+package org.fastddd.core.session;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fastddd.api.event.EventRegistry;
@@ -9,8 +9,6 @@ import org.fastddd.common.id.IdUtils;
 import org.fastddd.core.event.bus.EventBus;
 import org.fastddd.core.event.processor.EventHandlerProcessor;
 import org.fastddd.core.injector.InjectorFactory;
-import org.fastddd.core.session.Session;
-import org.fastddd.core.session.SessionHelper;
 
 import java.util.List;
 import java.util.Queue;
@@ -24,7 +22,7 @@ public class TransactionalSession implements Session {
 
     private final Queue<Invocation> invocationQueue = new ConcurrentLinkedDeque<>();
 
-    private TransactionalXid transactionalXid;
+    private String xid;
 
 
     private TransactionalSession() {}
@@ -34,8 +32,13 @@ public class TransactionalSession implements Session {
     }
 
     @Override
+    public String getXid() {
+        return xid;
+    }
+
+    @Override
     public void begin() {
-        this.transactionalXid = TransactionalXidBuilder.generate();
+        this.xid = XidUtils.generateXID();
         SessionHelper.onBegin(this);
     }
 
@@ -85,10 +88,6 @@ public class TransactionalSession implements Session {
 
     protected void doRollback() {
         invocationQueue.clear();
-    }
-
-    public TransactionalXid getTransactionalXid() {
-        return transactionalXid;
     }
 
 }

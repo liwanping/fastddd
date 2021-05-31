@@ -16,7 +16,8 @@ public final class Invocation {
     private final Object target;
     private final Object[] params;
 
-    private final Map<String, Object> context = new HashMap<>();
+
+    private transient final Map<String, Object> context = new HashMap<>();
 
     public Invocation(Method method, Object target, Object... params) {
         this.method = method;

@@ -8,6 +8,8 @@ import org.fastddd.common.invocation.Invocation;
  */
 public interface Session {
 
+    String getXid();
+
     void begin();
 
     void commit();

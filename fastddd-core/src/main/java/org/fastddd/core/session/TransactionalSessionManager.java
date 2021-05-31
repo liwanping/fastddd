@@ -1,8 +1,8 @@
-package org.fastddd.core.session.transaction;
+package org.fastddd.core.session;
 
 import org.fastddd.core.session.Session;
 import org.fastddd.core.session.SessionManager;
-import org.fastddd.core.session.transaction.TransactionalSession;
+import org.fastddd.core.session.TransactionalSession;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

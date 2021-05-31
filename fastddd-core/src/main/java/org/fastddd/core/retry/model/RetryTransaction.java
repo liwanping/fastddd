@@ -16,7 +16,7 @@ public class RetryTransaction {
 
     private String remark;
 
-    private String applicationData;
+    private byte[] applicationData;
 
     public String getXid() {
         return xid;
@@ -60,11 +60,11 @@ public class RetryTransaction {
         this.remark = remark;
     }
 
-    public String getApplicationData() {
+    public byte[] getApplicationData() {
         return applicationData;
     }
 
-    public RetryTransaction setApplicationData(String applicationData) {
+    public RetryTransaction setApplicationData(byte[] applicationData) {
         this.applicationData = applicationData;
         return this;
     }

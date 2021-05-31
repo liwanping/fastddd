@@ -26,12 +26,6 @@ public class RetryUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
     public static Object doWithRetry(Invocation invocation) {
-
-        if (!checkTransaction(invocation)) {
-            LOGGER.info("transaction check failed, will not retry: {}", invocation);
-            return null;
-        }
-
         return RetryStrategyHelper.doWithRetry(invocation);
     }
 
@@ -63,39 +57,6 @@ public class RetryUtils {
         return true;
     }
 
-    private static boolean checkTransaction(Invocation invocation) {
 
-        RetryContext retryContext = invocation.getContextValue(RetryConstants.RETRY_CONTEXT_KEY, RetryContext.class);
-        if (retryContext == null || RetryLauncher.JOB != retryContext.getRetryLauncher()) {
-            // only check for job retry
-            return true;
-        }
-
-        Retryable retryable = getRetryable(invocation);
-        if (StringUtils.isNotBlank(retryable.transactionCheckMethod())) {
-            Object target = invocation.getTarget();
-            if (Object.class != retryable.transactionCheckClass()) {
-                target = FactoryBuilder.getFactory(BeanFactory.class).getBean(retryable.transactionCheckClass());
-                if (target == null) {
-                    throw new SystemException("Failed to find the instance for transactionCheckClass: " +
-                            retryable.transactionCheckClass().getSimpleName());
-                }
-            }
-
-            try {
-                Method transactionCheckMethod = target.getClass().getDeclaredMethod(
-                        retryable.transactionCheckMethod(), invocation.getMethod().getParameterTypes());
-                if (transactionCheckMethod.getReturnType() != Boolean.class) {
-                    throw new SystemException("TransactionCheckMethod: " + retryable.transactionCheckMethod() +
-                            " should return boolean value");
-                }
-                return (boolean)ReflectionUtils.invokeMethod(transactionCheckMethod, target, invocation.getParams());
-            } catch (NoSuchMethodException e) {
-                throw new SystemException("Failed to find the method: " + retryable.transactionCheckMethod());
-            }
-        }
-
-        return true;
-    }
 
 }

@@ -5,6 +5,7 @@ import org.fastddd.api.retry.Retryable;
 import org.fastddd.common.factory.BeanFactory;
 import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.common.invocation.Invocation;
+import org.fastddd.core.retry.factory.RetryTransactionFactory;
 import org.fastddd.core.retry.model.RetryTransaction;
 import org.fastddd.core.retry.utils.RetryUtils;
 
@@ -15,7 +16,8 @@ import org.fastddd.core.retry.utils.RetryUtils;
 public class RetryTransactionHelper {
 
     public static void save(Invocation invocation) {
-
+        RetryTransaction retryTransaction = RetryTransactionFactory.buildRetryTransaction(invocation);
+        getTransactionStoreService(invocation).save(retryTransaction);
     }
 
     public static void update(Invocation invocation) {

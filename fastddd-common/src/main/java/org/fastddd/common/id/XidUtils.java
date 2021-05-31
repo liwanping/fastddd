@@ -26,6 +26,16 @@ public class XidUtils {
 
     private static String ipAddress;
 
+    /**
+     * Generate xid string.
+     *
+     * @return the string
+     */
+    public static String generateXID() {
+        long tranId = IdUtils.generateId();
+        return ipAddress + IP_PORT_SPLIT_CHAR + tranId;
+    }
+
 
     /**
      * Generate xid string.

@@ -6,7 +6,7 @@ import org.fastddd.core.event.bus.EventBus;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.event.processor.async.disruptor.AsyncDisruptor;
 import org.fastddd.core.session.SessionManager;
-import org.fastddd.core.session.transaction.TransactionalSessionManager;
+import org.fastddd.core.session.TransactionalSessionManager;
 
 /**
  * The module to bind the required classes and instances
