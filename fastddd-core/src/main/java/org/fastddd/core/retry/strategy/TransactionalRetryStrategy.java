@@ -64,17 +64,9 @@ public class TransactionalRetryStrategy implements RetryStrategy {
             return true;
         }
 
+        Object target = invocation.getTarget();
         Retryable retryable = RetryUtils.getRetryable(invocation);
         if (StringUtils.isNotBlank(retryable.transactionCheckMethod())) {
-            Object target = invocation.getTarget();
-            if (Object.class != retryable.transactionCheckClass()) {
-                target = FactoryBuilder.getFactory(BeanFactory.class).getBean(retryable.transactionCheckClass());
-                if (target == null) {
-                    throw new SystemException("Failed to find the instance for transactionCheckClass: " +
-                            retryable.transactionCheckClass().getSimpleName());
-                }
-            }
-
             try {
                 Method transactionCheckMethod = target.getClass().getDeclaredMethod(
                         retryable.transactionCheckMethod(), invocation.getMethod().getParameterTypes());
