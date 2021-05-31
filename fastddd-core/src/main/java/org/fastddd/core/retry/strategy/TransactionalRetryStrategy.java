@@ -23,13 +23,13 @@ import java.lang.reflect.Method;
  * @author: frank.li
  * @date: 2021/3/30
  */
-public class StoreRetryStrategy implements RetryStrategy {
+public class TransactionalRetryStrategy implements RetryStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StoreRetryStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionalRetryStrategy.class);
 
     @Override
     public boolean isQualified(Retryable retryable) {
-        return RetryMode.STORE == retryable.mode();
+        return RetryMode.TRANSACTIONAL == retryable.mode();
     }
 
     @Override

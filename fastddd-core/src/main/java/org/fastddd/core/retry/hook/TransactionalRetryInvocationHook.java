@@ -1,4 +1,4 @@
-package org.fastddd.core.retry;
+package org.fastddd.core.retry.hook;
 
 import org.fastddd.api.retry.RetryMode;
 import org.fastddd.api.retry.Retryable;
@@ -16,14 +16,14 @@ import org.slf4j.LoggerFactory;
  * @author: frank.li
  * @date: 2021/3/30
  */
-public class RetryStoreInvocationHook implements InvocationHook {
+public class TransactionalRetryInvocationHook implements InvocationHook {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RetryStoreInvocationHook.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionalRetryInvocationHook.class);
 
     @Override
     public boolean isQualified(Invocation invocation) {
         Retryable retryable = RetryUtils.getRetryable(invocation);
-        return retryable != null && RetryMode.STORE == retryable.mode();
+        return retryable != null && RetryMode.TRANSACTIONAL == retryable.mode();
     }
 
     @Override

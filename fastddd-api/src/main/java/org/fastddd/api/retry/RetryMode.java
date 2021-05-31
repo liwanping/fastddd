@@ -7,5 +7,5 @@ package org.fastddd.api.retry;
 public enum RetryMode {
     NEVER,
     SIMPLE,
-    STORE
+    TRANSACTIONAL
 }
