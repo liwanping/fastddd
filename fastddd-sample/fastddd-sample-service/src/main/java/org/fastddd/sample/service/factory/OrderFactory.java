@@ -1,8 +1,7 @@
-package org.fastddd.sample.service.domain.factory;
+package org.fastddd.sample.service.factory;
 
 import org.fastddd.sample.api.dto.OrderDto;
 import org.fastddd.sample.api.dto.OrderLineDto;
-import org.fastddd.sample.api.enums.OrderStatusEnum;
 import org.fastddd.sample.service.domain.entity.Order;
 import org.fastddd.sample.service.domain.entity.OrderLine;
 

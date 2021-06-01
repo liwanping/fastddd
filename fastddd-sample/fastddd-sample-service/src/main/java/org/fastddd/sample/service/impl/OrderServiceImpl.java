@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.fastddd.sample.api.OrderService;
 import org.fastddd.sample.api.dto.OrderDto;
 import org.fastddd.sample.service.domain.entity.Order;
-import org.fastddd.sample.service.domain.factory.OrderFactory;
+import org.fastddd.sample.service.factory.OrderFactory;
 import org.fastddd.sample.service.domain.repository.OrderRepository;
 import org.fastddd.sample.service.domain.service.OrderDomainService;
 import org.slf4j.Logger;
