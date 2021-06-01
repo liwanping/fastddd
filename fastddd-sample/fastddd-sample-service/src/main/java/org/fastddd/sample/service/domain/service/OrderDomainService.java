@@ -12,6 +12,7 @@ public class OrderDomainService {
     @Autowired
     private OrderRepository orderRepository;
 
+    //@EventSponsor
     @Transactional(rollbackFor = Throwable.class)
     public void createOrder(Order order) {
         order.save();

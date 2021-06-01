@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manage the domain event to register
+ * Manage the domain events to register
+ *
  * @author: frank.li
  * @date: 2021/3/29
  */

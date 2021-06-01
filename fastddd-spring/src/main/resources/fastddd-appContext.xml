@@ -10,4 +10,7 @@
 
     <bean class="org.fastddd.spring.transaction.EnhancedDataSourceTransactionManager"/>
 
+    <bean class="org.fastddd.core.retry.aop.RetryAspect"/>
+    <bean class="org.fastddd.core.event.aop.EventSponsorAspect"/>
+
 </beans>

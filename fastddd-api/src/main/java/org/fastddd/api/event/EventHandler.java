@@ -9,6 +9,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * EventHandler annotation to indicate the method is to process the given event
+ * It will be automatically triggered with session operations: commit or cleanupAfterCompletion
+ *
  * @author: frank.li
  * @date: 2021/3/29
  */
