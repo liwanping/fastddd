@@ -1,4 +1,4 @@
-package org.fastddd.core.retry.utils;
+package org.fastddd.core.retry;
 
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.api.retry.Retryable;

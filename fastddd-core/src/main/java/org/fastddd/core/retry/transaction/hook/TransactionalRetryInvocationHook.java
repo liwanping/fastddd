@@ -1,4 +1,4 @@
-package org.fastddd.core.retry.hook;
+package org.fastddd.core.retry.transaction.hook;
 
 import org.fastddd.api.retry.RetryMode;
 import org.fastddd.api.retry.Retryable;
@@ -6,9 +6,9 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHook;
 import org.fastddd.core.retry.constants.RetryConstants;
 import org.fastddd.core.retry.constants.RetryLauncher;
-import org.fastddd.core.retry.model.RetryContext;
-import org.fastddd.core.retry.service.RetryTransactionHelper;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.transaction.model.RetryContext;
+import org.fastddd.core.retry.transaction.service.RetryTransactionHelper;
+import org.fastddd.core.retry.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

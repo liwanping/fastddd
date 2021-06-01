@@ -3,7 +3,7 @@ package org.fastddd.core.retry.strategy;
 import org.fastddd.api.retry.Retryable;
 import org.fastddd.common.exception.SystemException;
 import org.fastddd.common.invocation.Invocation;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.RetryUtils;
 
 import java.util.ArrayList;
 import java.util.List;

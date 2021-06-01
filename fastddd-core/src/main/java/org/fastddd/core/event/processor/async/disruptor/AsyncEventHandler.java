@@ -3,7 +3,7 @@ package org.fastddd.core.event.processor.async.disruptor;
 import com.lmax.disruptor.LifecycleAware;
 import com.lmax.disruptor.Sequence;
 import com.lmax.disruptor.SequenceReportingEventHandler;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.RetryUtils;
 
 /**
  * @author: frank.li

@@ -11,7 +11,7 @@ import org.fastddd.core.event.processor.async.AsyncConfig;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.event.processor.async.AsyncThreadFactory;
 import org.fastddd.core.event.processor.async.AsyncUtils;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

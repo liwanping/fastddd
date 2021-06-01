@@ -1,6 +1,6 @@
 package org.fastddd.spring.boot.autoconfigure;
 
-import org.fastddd.core.retry.RetryAspect;
+import org.fastddd.core.retry.aop.RetryAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

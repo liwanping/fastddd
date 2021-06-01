@@ -1,4 +1,4 @@
-package org.fastddd.core.retry;
+package org.fastddd.core.retry.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHelper;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.RetryUtils;
 
 import java.lang.reflect.Method;
 

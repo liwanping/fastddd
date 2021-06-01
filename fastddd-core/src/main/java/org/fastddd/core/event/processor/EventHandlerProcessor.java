@@ -5,7 +5,7 @@ import org.fastddd.common.invocation.Invocation;
 import org.fastddd.api.event.EventHandler;
 import org.fastddd.core.event.processor.async.AsyncInvoker;
 import org.fastddd.core.injector.InjectorFactory;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.RetryUtils;
 
 /**
  * Process invocation that the method is annotated with @EventHandler

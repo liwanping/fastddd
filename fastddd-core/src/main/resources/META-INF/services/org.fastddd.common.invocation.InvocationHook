@@ -1,1 +1,1 @@
-org.fastddd.core.retry.hook.TransactionalRetryInvocationHook
+org.fastddd.core.retry.transaction.hook.TransactionalRetryInvocationHook

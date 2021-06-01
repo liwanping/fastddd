@@ -5,15 +5,13 @@ import org.fastddd.api.retry.RetryMode;
 import org.fastddd.api.retry.Retryable;
 import org.fastddd.common.exception.ReflectionRuntimeException;
 import org.fastddd.common.exception.SystemException;
-import org.fastddd.common.factory.BeanFactory;
-import org.fastddd.common.factory.FactoryBuilder;
 import org.fastddd.common.invocation.Invocation;
 import org.fastddd.common.invocation.InvocationHelper;
 import org.fastddd.common.utils.ReflectionUtils;
 import org.fastddd.core.retry.constants.RetryConstants;
 import org.fastddd.core.retry.constants.RetryLauncher;
-import org.fastddd.core.retry.model.RetryContext;
-import org.fastddd.core.retry.utils.RetryUtils;
+import org.fastddd.core.retry.transaction.model.RetryContext;
+import org.fastddd.core.retry.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

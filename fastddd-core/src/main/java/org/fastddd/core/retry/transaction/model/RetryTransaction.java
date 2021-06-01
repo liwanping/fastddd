@@ -1,4 +1,4 @@
-package org.fastddd.core.retry.model;
+package org.fastddd.core.retry.transaction.model;
 
 /**
  * @author: frank.li

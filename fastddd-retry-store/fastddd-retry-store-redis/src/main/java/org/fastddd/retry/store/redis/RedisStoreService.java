@@ -1,7 +1,7 @@
 package org.fastddd.retry.store.redis;
 
-import org.fastddd.core.retry.model.RetryTransaction;
-import org.fastddd.core.retry.service.TransactionStoreService;
+import org.fastddd.core.retry.transaction.model.RetryTransaction;
+import org.fastddd.core.retry.transaction.service.TransactionStoreService;
 
 /**
  * @author: frank.li

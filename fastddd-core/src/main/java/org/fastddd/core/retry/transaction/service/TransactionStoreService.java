@@ -1,6 +1,6 @@
-package org.fastddd.core.retry.service;
+package org.fastddd.core.retry.transaction.service;
 
-import org.fastddd.core.retry.model.RetryTransaction;
+import org.fastddd.core.retry.transaction.model.RetryTransaction;
 
 /**
  * @author: frank.li
