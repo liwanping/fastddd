@@ -1,9 +1,7 @@
 package org.fastddd.sample.service.eventhandler;
 
 import com.alibaba.fastjson.JSON;
-import org.aspectj.weaver.ast.Or;
 import org.fastddd.api.event.EventHandler;
-import org.fastddd.api.event.EventSponsor;
 import org.fastddd.sample.service.domain.entity.Order;
 import org.fastddd.sample.service.domain.event.OrderCreatedEvent;
 import org.fastddd.sample.service.domain.event.OrderPaidEvent;
@@ -17,9 +15,9 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-public class OrderEventMessageHandler {
+public class OrderMessageHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderEventMessageHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderMessageHandler.class);
 
     @Autowired
     private OrderMessageSender orderMessageSender;
