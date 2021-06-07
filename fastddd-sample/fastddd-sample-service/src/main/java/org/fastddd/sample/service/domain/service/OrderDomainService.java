@@ -18,4 +18,16 @@ public class OrderDomainService {
         order.save();
         orderRepository.save(order);
     }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void payOrder(Order order) {
+        order.pay();
+        orderRepository.save(order);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void cancelOrder(Order order) {
+        order.cancel();
+        orderRepository.save(order);
+    }
 }

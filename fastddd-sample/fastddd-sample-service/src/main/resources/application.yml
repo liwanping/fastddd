@@ -4,6 +4,17 @@ spring:
     url: jdbc:mysql://localhost:3306/order
     username: root
     password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    database: 1
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 1
+        max-idle: 5
+        max-wait: 10
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml

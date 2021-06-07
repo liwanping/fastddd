@@ -5,16 +5,16 @@ import org.fastddd.sample.service.domain.entity.Order;
 
 public class OrderFinishedEvent implements DomainEvent {
 
-    private Order order;
+    private Long orderId;
 
     public OrderFinishedEvent() {
     }
 
-    public OrderFinishedEvent(Order order) {
-        this.order = order;
+    public OrderFinishedEvent(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrderId() {
+        return orderId;
     }
 }

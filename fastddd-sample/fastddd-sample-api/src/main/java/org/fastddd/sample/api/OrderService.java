@@ -6,7 +6,7 @@ public interface OrderService {
 
     Long placeOrder(OrderDto orderDto);
 
-    void confirmOrder(Long orderId);
+    void payOrder(Long orderId);
 
     void cancelOrder(Long orderId);
 }

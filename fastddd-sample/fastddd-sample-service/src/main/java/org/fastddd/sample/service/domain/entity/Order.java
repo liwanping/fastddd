@@ -2,7 +2,10 @@ package org.fastddd.sample.service.domain.entity;
 
 import org.fastddd.api.entity.AbstractAggregateRoot;
 import org.fastddd.sample.api.enums.OrderStatusEnum;
+import org.fastddd.sample.service.domain.event.OrderCanceledEvent;
 import org.fastddd.sample.service.domain.event.OrderCreatedEvent;
+import org.fastddd.sample.service.domain.event.OrderFinishedEvent;
+import org.fastddd.sample.service.domain.event.OrderPaidEvent;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -66,13 +69,16 @@ public class Order extends AbstractAggregateRoot<Long> {
 
     public void pay() {
         this.orderStatus = OrderStatusEnum.PAID.getId();
+        this.register(new OrderPaidEvent(getId()));
     }
 
     public void cancel() {
         this.orderStatus = OrderStatusEnum.CANCELED.getId();
+        this.register(new OrderCanceledEvent(getId()));
     }
 
     public void finish() {
         this.orderStatus = OrderStatusEnum.FINISHED.getId();
+        this.register(new OrderFinishedEvent(getId()));
     }
 }

@@ -5,16 +5,16 @@ import org.fastddd.sample.service.domain.entity.Order;
 
 public class OrderCanceledEvent implements DomainEvent {
 
-    private Order order;
+    private Long orderId;
 
     public OrderCanceledEvent() {
     }
 
-    public OrderCanceledEvent(Order order) {
-        this.order = order;
+    public OrderCanceledEvent(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrderId() {
+        return orderId;
     }
 }

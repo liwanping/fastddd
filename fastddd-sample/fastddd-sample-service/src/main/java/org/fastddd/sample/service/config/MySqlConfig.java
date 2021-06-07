@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = "org.fastddd.sample.service.infra.mysql")
-public class OrderMySqlConfig {
+public class MySqlConfig {
 
 
 

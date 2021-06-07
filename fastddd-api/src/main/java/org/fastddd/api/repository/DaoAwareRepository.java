@@ -9,7 +9,9 @@ import org.fastddd.common.factory.FactoryBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -118,7 +120,7 @@ public class DaoAwareRepository<T extends AggregateRoot<ID>, ID extends Serializ
         DomainObjectDao<T, ID> dao = getDao(aggregateType);
         T entity = dao.findById(id);
         if (entity != null) {
-            doFindChildComponents(entity);
+            doFindChildComponents(Collections.singletonList(entity));
         }
         return entity;
     }
@@ -152,14 +154,6 @@ public class DaoAwareRepository<T extends AggregateRoot<ID>, ID extends Serializ
      * @param entities
      */
     protected void doFindChildComponents(Collection<T> entities) {
-
-    }
-
-    /**
-     * Find all the child components for the entity
-     * @param entity
-     */
-    protected void doFindChildComponents(T entity) {
 
     }
 
