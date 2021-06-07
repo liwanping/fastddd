@@ -19,7 +19,7 @@ public class OrderCacheHandler {
 
     private static final String ORDER_CACHE_KEY = "order:%s";
 
-    private static final long ORDER_CACHE_EXPIRED_SECONDS = 30000L;
+    private static final long ORDER_CACHE_EXPIRED_SECONDS = 30L;
 
     @Autowired
     private RedisCacheManager redisCacheManager;
@@ -27,7 +27,7 @@ public class OrderCacheHandler {
     @Autowired
     private OrderRepository orderRepository;
 
-    @EventHandler
+    @EventHandler(asynchronous = true)
     public void handleOrderCreatedEvent(OrderCreatedEvent event) {
         LOGGER.info("handle order created event for cache, order: {}", JSON.toJSONString(event.getOrder()));
         redisCacheManager.put(String.format(ORDER_CACHE_KEY, event.getOrder().getId()),
@@ -35,7 +35,7 @@ public class OrderCacheHandler {
                 ORDER_CACHE_EXPIRED_SECONDS);
     }
 
-    @EventHandler
+    @EventHandler(asynchronous = true)
     public void handleOrderPaidEvent(OrderPaidEvent event) {
         LOGGER.info("handle order paid event for cache, orderId: {}", event.getOrderId());
         Order order = orderRepository.findById(event.getOrderId());
